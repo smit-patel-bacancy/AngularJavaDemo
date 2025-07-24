@@ -1,0 +1,27 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4 text-primary">Demo 1 Presentation</h3>
+          <div class="mb-3 text-center">
+            <span class="fs-5">Display Text:</span>
+            <span class="badge bg-info text-dark ms-2">{{ displayText }}</span>
+          </div>
+          <div class="mb-3 d-flex justify-content-center">
+            <button class="btn btn-success px-4" (click)="onButtonClick()" [disabled]="isBtnDisabled">
+              <i class="bi bi-hand-index-thumb"></i> Click me!
+            </button>
+          </div>
+          <div class="mb-3">
+            <input type="text" class="form-control form-control-lg" [(ngModel)]="displayText"
+              placeholder="Type something here...">
+          </div>
+          <div class="text-center mt-3">
+            <small class="text-muted">Try typing and clicking the button!</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
