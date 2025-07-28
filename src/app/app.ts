@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { Demo1Component } from "./demo1/demo1.component";
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   imports: [
-    Demo1Component
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'

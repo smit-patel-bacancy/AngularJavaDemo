@@ -1,0 +1,236 @@
+<div class="directives-demo">
+  <header class="demo-header">
+    <h1>🎯 Angular Directives Tutorial</h1>
+    <p>Learn Angular directives through interactive examples</p>
+  </header>
+
+  <!-- Structural Directives Section -->
+  <section class="demo-section">
+    <h2>📋 Structural Directives</h2>
+    <p class="section-description">
+      Structural directives change the DOM layout by adding and removing DOM elements.
+    </p>
+
+    <!-- *ngIf Demo -->
+    <div class="demo-card">
+      <h3>*ngIf Directive</h3>
+      <p>Conditionally renders elements based on a boolean expression.</p>
+
+      <div class="demo-content">
+        <button (click)="toggleContent()" class="btn btn-primary">
+          {{ showContent ? 'Hide' : 'Show' }} Content
+        </button>
+
+        <div *ngIf="showContent" class="conditional-content">
+          <p>🎉 This content is shown when showContent is true!</p>
+          <p>Try clicking the button above to toggle this content.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- *ngFor Demo -->
+    <div class="demo-card">
+      <h3>*ngFor Directive</h3>
+      <p>Repeats a template for each item in an array.</p>
+
+      <div class="demo-content">
+        <div class="controls">
+          <button (click)="addItem()" class="btn btn-success">Add Item</button>
+          <button (click)="items = []" class="btn btn-warning">Clear All</button>
+        </div>
+
+        <ul class="items-list">
+          <li *ngFor="let item of items; trackBy: trackByFn; let i = index" class="item">
+            <span class="item-text">{{ i + 1 }}. {{ item }}</span>
+            <button (click)="removeItem(i)" class="btn btn-danger btn-sm">Remove</button>
+          </li>
+        </ul>
+
+        <p class="info">💡 Notice how the list updates dynamically when you add/remove items!</p>
+      </div>
+    </div>
+
+    <!-- *ngSwitch Demo -->
+    <div class="demo-card">
+      <h3>*ngSwitch Directive</h3>
+      <p>Displays one element from a set of choices based on a switch expression.</p>
+
+      <div class="demo-content">
+        <div class="switch-controls">
+          <label>Select a fruit:</label>
+          <select [(ngModel)]="selectedItem" class="form-control">
+            <option value="">Choose...</option>
+            <option value="apple">Apple</option>
+            <option value="banana">Banana</option>
+            <option value="orange">Orange</option>
+            <option value="mango">Mango</option>
+          </select>
+        </div>
+
+        <div [ngSwitch]="selectedItem" class="switch-result">
+          <p *ngSwitchCase="'apple'" class="switch-case apple">🍎 Apple - Sweet and crunchy!</p>
+          <p *ngSwitchCase="'banana'" class="switch-case banana">🍌 Banana - Rich in potassium!</p>
+          <p *ngSwitchCase="'orange'" class="switch-case orange">🍊 Orange - Full of vitamin C!</p>
+          <p *ngSwitchCase="'mango'" class="switch-case mango">🥭 Mango - The king of fruits!</p>
+          <p *ngSwitchDefault class="switch-default">Please select a fruit from the dropdown above.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Attribute Directives Section -->
+  <section class="demo-section">
+    <h2>🎨 Attribute Directives</h2>
+    <p class="section-description">
+      Attribute directives change the appearance or behavior of an element.
+    </p>
+
+    <!-- ngClass Demo -->
+    <div class="demo-card">
+      <h3>ngClass Directive</h3>
+      <p>Dynamically adds and removes CSS classes.</p>
+
+      <div class="demo-content">
+        <div class="controls">
+          <button (click)="toggleActive()" class="btn btn-primary">
+            Toggle Active Class
+          </button>
+          <button (click)="toggleDisabled()" class="btn btn-secondary">
+            Toggle Disabled Class
+          </button>
+        </div>
+
+        <div [ngClass]="{
+            'active': isActive,
+            'disabled': isDisabled,
+            'demo-element': true
+          }" class="ngclass-demo">
+          <p>This element's classes change based on the buttons above!</p>
+          <p>Current classes: {{ isActive ? 'active ' : '' }}{{ isDisabled ? 'disabled' : '' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ngStyle Demo -->
+    <div class="demo-card">
+      <h3>ngStyle Directive</h3>
+      <p>Dynamically sets inline styles on an element.</p>
+
+      <div class="demo-content">
+        <div class="controls">
+          <button (click)="increaseFontSize()" class="btn btn-success">Increase Font</button>
+          <button (click)="decreaseFontSize()" class="btn btn-warning">Decrease Font</button>
+          <button (click)="changeTextColor('red')" class="btn btn-danger">Red Text</button>
+          <button (click)="changeTextColor('blue')" class="btn btn-primary">Blue Text</button>
+          <button (click)="changeTextColor('green')" class="btn btn-success">Green Text</button>
+        </div>
+
+        <p [ngStyle]="{
+            'font-size': fontSize + 'px',
+            'color': textColor,
+            'font-weight': 'bold'
+          }" class="ngstyle-demo">
+          This text's style changes dynamically! (Font size: {{ fontSize }}px, Color: {{ textColor }})
+        </p>
+      </div>
+    </div>
+
+    <!-- Custom Directive Demo -->
+    <div class="demo-card">
+      <h3>Custom Directive (appHighlight)</h3>
+      <p>Custom directive that highlights elements on mouse hover.</p>
+
+      <div class="demo-content">
+        <div class="controls">
+          <label>Highlight Color:</label>
+          <select [(ngModel)]="customHighlightColor" class="form-control">
+            <option value="lightblue">Light Blue</option>
+            <option value="lightgreen">Light Green</option>
+            <option value="lightcoral">Light Coral</option>
+            <option value="lightyellow">Light Yellow</option>
+            <option value="lightpink">Light Pink</option>
+          </select>
+        </div>
+
+        <div class="highlight-demo">
+          <p appHighlight [highlightColor]="customHighlightColor" class="highlight-element">
+            🖱️ Hover over me to see the highlight effect!
+          </p>
+          <p appHighlight [highlightColor]="customHighlightColor" class="highlight-element">
+            🎯 Try hovering over this element too!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Forms Demo Section -->
+  <!-- <section class="demo-section">
+    <h2>📝 Forms with Directives</h2>
+    <p class="section-description">
+      See how directives work with Angular forms.
+    </p>
+
+    <div class="demo-card">
+      <h3>Template-Driven Forms</h3>
+      <p>Using ngModel directive for two-way data binding.</p>
+
+      <div class="demo-content">
+        <form (ngSubmit)="onSubmit()" class="form-demo">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" [(ngModel)]="username" class="form-control"
+              placeholder="Enter your username">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" [(ngModel)]="email" class="form-control"
+              placeholder="Enter your email">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit Form</button>
+        </form>
+
+        <div class="form-preview">
+          <h4>Form Data Preview:</h4>
+          <p><strong>Username:</strong> {{ username || 'Not entered' }}</p>
+          <p><strong>Email:</strong> {{ email || 'Not entered' }}</p>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Summary Section -->
+  <section class="demo-section">
+    <h2>📚 Summary</h2>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <h4>Structural Directives</h4>
+        <ul>
+          <li><code>*ngIf</code> - Conditional rendering</li>
+          <li><code>*ngFor</code> - List rendering</li>
+          <li><code>*ngSwitch</code> - Multiple choice rendering</li>
+        </ul>
+      </div>
+
+      <div class="summary-card">
+        <h4>Attribute Directives</h4>
+        <ul>
+          <li><code>ngClass</code> - Dynamic CSS classes</li>
+          <li><code>ngStyle</code> - Dynamic inline styles</li>
+          <li><code>ngModel</code> - Two-way data binding</li>
+        </ul>
+      </div>
+
+      <div class="summary-card">
+        <h4>Custom Directives</h4>
+        <ul>
+          <li><code>appHighlight</code> - Custom hover effect</li>
+          <li>Can create your own directives</li>
+          <li>Use <code>&#64;Directive()</code> decorator</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
