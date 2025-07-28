@@ -1,0 +1,110 @@
+# Cursor Rules for Angular Project
+
+## Project Overview
+This is an Angular project with TypeScript. The project follows Angular best practices and conventions.
+
+## File Structure
+- `src/app/` - Main application components and modules
+- `src/app/demo1/` - Demo component with its associated files
+- `src/` - Source files including main entry point and styles
+- Root level contains Angular configuration files
+
+## Coding Standards
+
+### TypeScript
+- Use strict TypeScript configuration
+- Prefer interfaces over types for object shapes
+- Use proper type annotations for all variables and function parameters
+- Follow Angular naming conventions (PascalCase for components, camelCase for methods)
+
+### Angular Components
+- Each component should have its own directory with component files
+- Use standalone components when possible (Angular 17+)
+- Follow the naming convention: `component-name.component.ts`
+- Include proper lifecycle hooks and OnDestroy for cleanup
+
+### HTML Templates
+- Use Angular template syntax and directives
+- Prefer structural directives (*ngIf, *ngFor) over conditional rendering
+- Use Angular forms for user input
+- Follow accessibility guidelines
+
+### Styling
+- Use SCSS for styling
+- Follow BEM methodology for CSS classes
+- Use Angular's view encapsulation
+- Prefer component-scoped styles
+
+### Testing
+- Write unit tests for all components and services
+- Use Angular testing utilities
+- Follow AAA pattern (Arrange, Act, Assert)
+
+## Best Practices
+- Use dependency injection for services
+- Implement proper error handling
+- Use Angular's built-in features (routing, forms, etc.)
+- Follow the single responsibility principle
+- Keep components small and focused
+- Use proper Angular lifecycle hooks
+
+## Code Organization
+- Group related functionality together
+- Use feature modules for larger applications
+- Keep services in a dedicated services folder
+- Use constants for magic numbers and strings
+
+## Performance
+- Use OnPush change detection strategy when appropriate
+- Implement trackBy functions for *ngFor
+- Use async pipe for observables
+- Lazy load modules and components
+
+## Security
+- Sanitize user input
+- Use Angular's built-in XSS protection
+- Validate all form inputs
+- Use HTTPS in production
+
+## Dependencies
+- Keep Angular and related packages up to date
+- Use Angular CLI for project management
+- Prefer official Angular packages over third-party alternatives
+
+## Development Workflow
+- **ALWAYS use Angular CLI commands to generate components, services, and other Angular artifacts**
+- Use `ng generate component component-name` or `ng g c component-name` for components
+- Use `ng generate service service-name` or `ng g s service-name` for services
+- Use `ng generate interface interface-name` or `ng g i interface-name` for interfaces
+- Use `ng generate pipe pipe-name` or `ng g p pipe-name` for pipes
+- Use `ng generate guard guard-name` or `ng g g guard-name` for guards
+- Use `ng generate module module-name` or `ng g m module-name` for modules
+- Use `ng generate directive directive-name` or `ng g d directive-name` for directives
+- Follow Git workflow with meaningful commit messages
+- Use proper branching strategy
+- Test thoroughly before merging
+
+## Common Patterns
+- Use RxJS observables for async operations
+- Implement proper error boundaries
+- Use Angular's built-in form validation
+- Follow reactive forms patterns for complex forms
+
+## File Naming Conventions
+- Components: `component-name.component.ts`
+- Services: `service-name.service.ts`
+- Interfaces: `interface-name.interface.ts`
+- Models: `model-name.model.ts`
+- Guards: `guard-name.guard.ts`
+- Pipes: `pipe-name.pipe.ts`
+
+## Import Organization
+- Group imports by type (Angular, third-party, local)
+- Use absolute paths for imports when possible
+- Avoid circular dependencies
+
+## Documentation
+- Add JSDoc comments for public methods
+- Document complex business logic
+- Keep README files updated
+- Use meaningful variable and function names
