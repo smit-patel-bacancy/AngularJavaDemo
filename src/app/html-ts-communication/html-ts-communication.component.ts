@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-demo1',
+  selector: 'app-html-ts-communication',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './demo1.component.html',
-  styleUrl: './demo1.component.scss'
+  templateUrl: './html-ts-communication.component.html',
+  styleUrl: './html-ts-communication.component.scss'
 })
-export class Demo1Component {
+export class HtmlTsCommunicationComponent {
   // String Interpolation Examples
   title = 'Angular Binding Demo';
   currentTime = new Date();
