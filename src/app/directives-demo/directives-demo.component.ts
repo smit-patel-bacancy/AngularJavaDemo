@@ -20,8 +20,7 @@ export class DirectivesDemoComponent {
   isHighlighted = false;
   highlightColor = 'yellow';
 
-  // Properties for custom directive demo
-  customHighlightColor = 'lightblue';
+
 
   // Properties for ngClass demo
   isActive = false;

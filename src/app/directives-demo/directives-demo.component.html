@@ -141,22 +141,11 @@
       <p>Custom directive that highlights elements on mouse hover.</p>
 
       <div class="demo-content">
-        <div class="controls">
-          <label>Highlight Color:</label>
-          <select [(ngModel)]="customHighlightColor" class="form-control">
-            <option value="lightblue">Light Blue</option>
-            <option value="lightgreen">Light Green</option>
-            <option value="lightcoral">Light Coral</option>
-            <option value="lightyellow">Light Yellow</option>
-            <option value="lightpink">Light Pink</option>
-          </select>
-        </div>
-
         <div class="highlight-demo">
-          <p appHighlight [highlightColor]="customHighlightColor" class="highlight-element">
+          <p appHighlight class="highlight-element">
             🖱️ Hover over me to see the highlight effect!
           </p>
-          <p appHighlight [highlightColor]="customHighlightColor" class="highlight-element">
+          <p appHighlight class="highlight-element">
             🎯 Try hovering over this element too!
           </p>
         </div>
