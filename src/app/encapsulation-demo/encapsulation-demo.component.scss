@@ -1,0 +1,252 @@
+.encapsulation-demo {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border: 2px solid #e1e8ed;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.demo-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border-radius: 8px;
+
+  h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    opacity: 0.9;
+  }
+}
+
+.encapsulation-modes {
+  margin-bottom: 2rem;
+
+  h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+  }
+
+  .mode-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+
+    .mode-item {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid #e9ecef;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      h5 {
+        color: #2c3e50;
+        margin: 0 0 0.5rem 0;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      p {
+        color: #495057;
+        margin: 0 0 0.5rem 0;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      code {
+        background: #e9ecef;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        color: #e74c3c;
+        font-weight: 600;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+.style-demo {
+  margin-bottom: 2rem;
+
+  h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+  }
+
+  .demo-section {
+    margin-bottom: 1.5rem;
+
+    h5 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+  }
+}
+
+.component-styled {
+  padding: 1.5rem;
+  background: #e8f4fd;
+  border-radius: 8px;
+  border: 2px solid #3498db;
+  margin-bottom: 1rem;
+
+  .demo-text {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .styled-paragraph {
+    color: #1565c0;
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  .styled-button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #2980b9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+  }
+}
+
+.global-styled {
+  padding: 1.5rem;
+  background: #fff3e0;
+  border-radius: 8px;
+  border: 2px solid #ff9800;
+  margin-bottom: 1rem;
+
+  .global-text {
+    color: #e65100;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .global-paragraph {
+    color: #f57c00;
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  .global-button {
+    background: #ff9800;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #f57c00;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+  }
+}
+
+.encapsulation-info {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+
+  h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+  }
+
+  ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+
+    li {
+      margin-bottom: 0.5rem;
+      color: #495057;
+      line-height: 1.5;
+
+      strong {
+        color: #2c3e50;
+      }
+    }
+  }
+
+  .info-box {
+    background: #e8f4fd;
+    padding: 1rem;
+    border-radius: 6px;
+    border-left: 4px solid #3498db;
+
+    h5 {
+      color: #2c3e50;
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    p {
+      color: #495057;
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+      line-height: 1.4;
+
+      code {
+        background: #f8f9fa;
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        color: #e74c3c;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .encapsulation-demo {
+    padding: 1rem;
+  }
+
+  .mode-list {
+    grid-template-columns: 1fr !important;
+  }
+
+  .component-styled, .global-styled {
+    padding: 1rem;
+  }
+}
