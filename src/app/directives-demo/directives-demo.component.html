@@ -11,68 +11,264 @@
       Structural directives change the DOM layout by adding and removing DOM elements.
     </p>
 
-    <!-- *ngIf Demo -->
+    <!-- *ngIf Demo - Newer Syntax -->
     <div class="demo-card">
-      <h3>*ngIf Directive</h3>
-      <p>Conditionally renders elements based on a boolean expression.</p>
-
-      <div class="demo-content">
-        <button (click)="toggleContent()" class="btn btn-primary">
-          {{ showContent ? 'Hide' : 'Show' }} Content
-        </button>
-
-        <div *ngIf="showContent" class="conditional-content">
-          <p>🎉 This content is shown when showContent is true!</p>
-          <p>Try clicking the button above to toggle this content.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- *ngFor Demo -->
-    <div class="demo-card">
-      <h3>*ngFor Directive</h3>
-      <p>Repeats a template for each item in an array.</p>
+      <h3>*ngIf Directive (Newer Syntax)</h3>
+      <p>Conditionally renders elements using the newer &#64;if syntax (Angular 17+) and traditional *ngIf.</p>
 
       <div class="demo-content">
         <div class="controls">
-          <button (click)="addItem()" class="btn btn-success">Add Item</button>
-          <button (click)="items = []" class="btn btn-warning">Clear All</button>
+          <button (click)="toggleContent()" class="btn btn-primary">
+            {{ showContent ? 'Hide' : 'Show' }} Content
+          </button>
         </div>
 
-        <ul class="items-list">
-          <li *ngFor="let item of items; trackBy: trackByFn; let i = index" class="item">
-            <span class="item-text">{{ i + 1 }}. {{ item }}</span>
-            <button (click)="removeItem(i)" class="btn btn-danger btn-sm">Remove</button>
-          </li>
-        </ul>
+        <!-- Traditional *ngIf syntax -->
+        <div class="demo-subsection">
+          <h4>Traditional *ngIf Syntax:</h4>
+          <div *ngIf="showContent" class="conditional-content">
+            <p>🎉 This content is shown when showContent is true!</p>
+            <p>Try clicking the button above to toggle this content.</p>
+          </div>
+        </div>
 
-        <p class="info">💡 Notice how the list updates dynamically when you add/remove items!</p>
+        <!-- Newer &#64;if syntax (Angular 17+) -->
+        <div class="demo-subsection">
+          <h4>Newer &#64;if Syntax (Angular 17+):</h4>
+          @if (showContent) {
+            <div class="conditional-content">
+              <p>🚀 This uses the newer &#64;if syntax!</p>
+              <p>More readable and performant than *ngIf.</p>
+            </div>
+          } @else {
+            <div class="conditional-content">
+              <p>❌ Content is hidden using &#64;else block.</p>
+            </div>
+          }
+        </div>
+
+        <!-- Complex ngIf with else -->
+        <div class="demo-subsection">
+          <h4>Complex *ngIf with else:</h4>
+          <div *ngIf="user.isActive; else inactiveUser" class="conditional-content">
+            <p>✅ User {{ user.name }} is active!</p>
+          </div>
+          <ng-template #inactiveUser>
+            <div class="conditional-content">
+              <p>❌ User {{ user.name }} is inactive.</p>
+            </div>
+          </ng-template>
+        </div>
       </div>
     </div>
 
-    <!-- *ngSwitch Demo -->
+    <!-- *ngFor Demo - Enhanced with trackBy -->
     <div class="demo-card">
-      <h3>*ngSwitch Directive</h3>
+      <h3>*ngFor Directive (Enhanced with trackBy)</h3>
+      <p>Repeats a template for each item in an array with optimized trackBy functions.</p>
+
+      <div class="demo-content">
+        <div class="controls">
+          <button (click)="addItem()" class="btn btn-success">Add Simple Item</button>
+          <button (click)="addUser()" class="btn btn-info">Add User</button>
+          <button (click)="items = []; users = []" class="btn btn-warning">Clear All</button>
+        </div>
+
+        <!-- Simple array with trackBy -->
+        <div class="demo-subsection">
+          <h4>Simple Array with trackBy:</h4>
+          <ul class="items-list">
+            <li *ngFor="let item of items; trackBy: trackByFn; let i = index" class="item">
+              <span class="item-text">{{ i + 1 }}. {{ item }}</span>
+              <button (click)="removeItem(i)" class="btn btn-danger btn-sm">Remove</button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Object array with enhanced trackBy -->
+        <div class="demo-subsection">
+          <h4>Object Array with Enhanced trackBy:</h4>
+          <div class="users-grid">
+            <div *ngFor="let user of users; trackBy: trackByUserId; let i = index" class="user-card">
+              <div class="user-info">
+                <h5>{{ user.name }}</h5>
+                <p><strong>ID:</strong> {{ user.id }}</p>
+                <p><strong>Age:</strong> {{ user.age }}</p>
+                <p><strong>Role:</strong> {{ user.role }}</p>
+              </div>
+              <div class="user-actions">
+                <button (click)="updateUserRole(user.id)" class="btn btn-primary btn-sm">
+                  Change Role
+                </button>
+                <button (click)="removeUser(user.id)" class="btn btn-danger btn-sm">
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Newer &#64;for syntax (Angular 17+) -->
+        <div class="demo-subsection">
+          <h4>Newer &#64;for Syntax (Angular 17+):</h4>
+          <div class="users-grid">
+            @for (user of users; track user.id; let i = $index) {
+              <div class="user-card">
+                <div class="user-info">
+                  <h5>{{ user.name }}</h5>
+                  <p><strong>Index:</strong> {{ i }}</p>
+                  <p><strong>Role:</strong> {{ user.role }}</p>
+                </div>
+              </div>
+            } @empty {
+              <div class="empty-state">
+                <p>No users found. Add some users to see them here!</p>
+              </div>
+            }
+          </div>
+        </div>
+
+        <p class="info">💡 Notice how trackBy optimizes performance by tracking items by their unique identifiers!</p>
+      </div>
+    </div>
+
+    <!-- *ngSwitch Demo - Enhanced -->
+    <div class="demo-card">
+      <h3>*ngSwitch Directive (Enhanced)</h3>
       <p>Displays one element from a set of choices based on a switch expression.</p>
 
       <div class="demo-content">
-        <div class="switch-controls">
-          <label>Select a fruit:</label>
-          <select [(ngModel)]="selectedItem" class="form-control">
-            <option value="">Choose...</option>
-            <option value="apple">Apple</option>
-            <option value="banana">Banana</option>
-            <option value="orange">Orange</option>
-            <option value="mango">Mango</option>
-          </select>
+        <!-- Traditional ngSwitch -->
+        <div class="demo-subsection">
+          <h4>Traditional *ngSwitch Syntax:</h4>
+          <div class="switch-controls">
+            <label>Select a fruit:</label>
+            <select [(ngModel)]="selectedItem" class="form-control">
+              <option value="">Choose...</option>
+              <option value="apple">Apple</option>
+              <option value="banana">Banana</option>
+              <option value="orange">Orange</option>
+              <option value="mango">Mango</option>
+            </select>
+          </div>
+
+          <div [ngSwitch]="selectedItem" class="switch-result">
+            <p *ngSwitchCase="'apple'" class="switch-case apple">🍎 Apple - Sweet and crunchy!</p>
+            <p *ngSwitchCase="'banana'" class="switch-case banana">🍌 Banana - Rich in potassium!</p>
+            <p *ngSwitchCase="'orange'" class="switch-case orange">🍊 Orange - Full of vitamin C!</p>
+            <p *ngSwitchCase="'mango'" class="switch-case mango">🥭 Mango - The king of fruits!</p>
+            <p *ngSwitchDefault class="switch-default">Please select a fruit from the dropdown above.</p>
+          </div>
         </div>
 
-        <div [ngSwitch]="selectedItem" class="switch-result">
-          <p *ngSwitchCase="'apple'" class="switch-case apple">🍎 Apple - Sweet and crunchy!</p>
-          <p *ngSwitchCase="'banana'" class="switch-case banana">🍌 Banana - Rich in potassium!</p>
-          <p *ngSwitchCase="'orange'" class="switch-case orange">🍊 Orange - Full of vitamin C!</p>
-          <p *ngSwitchCase="'mango'" class="switch-case mango">🥭 Mango - The king of fruits!</p>
-          <p *ngSwitchDefault class="switch-default">Please select a fruit from the dropdown above.</p>
+        <!-- Enhanced ngSwitch with view modes -->
+        <div class="demo-subsection">
+          <h4>Enhanced *ngSwitch with View Modes:</h4>
+          <div class="switch-controls">
+            <label>Select view mode:</label>
+            <div class="view-buttons">
+              @for (option of switchOptions; track option) {
+                <button
+                  (click)="changeView(option)"
+                  [class.active]="currentView === option"
+                  class="btn btn-outline-primary">
+                  {{ option | titlecase }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <div [ngSwitch]="currentView" class="switch-result">
+            <div *ngSwitchCase="'list'" class="switch-case list-view">
+              <h5>📋 List View</h5>
+              <ul>
+                @for (user of users; track user.id) {
+                  <li>{{ user.name }} - {{ user.role }}</li>
+                }
+              </ul>
+            </div>
+            <div *ngSwitchCase="'grid'" class="switch-case grid-view">
+              <h5>🔲 Grid View</h5>
+              <div class="grid-layout">
+                @for (user of users; track user.id) {
+                  <div class="grid-item">{{ user.name }}</div>
+                }
+              </div>
+            </div>
+            <div *ngSwitchCase="'table'" class="switch-case table-view">
+              <h5>📊 Table View</h5>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (user of users; track user.id) {
+                    <tr>
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.age }}</td>
+                      <td>{{ user.role }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <div *ngSwitchCase="'cards'" class="switch-case cards-view">
+              <h5>🃏 Cards View</h5>
+              <div class="cards-layout">
+                @for (user of users; track user.id) {
+                  <div class="card">
+                    <div class="card-body">
+                      <h6>{{ user.name }}</h6>
+                      <p>{{ user.role }}</p>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+            <div *ngSwitchDefault class="switch-default">
+              <p>Please select a view mode from the buttons above.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Newer &#64;switch syntax (Angular 17+) -->
+        <div class="demo-subsection">
+          <h4>Newer &#64;switch Syntax (Angular 17+):</h4>
+          @switch (currentView) {
+            @case ('list') {
+              <div class="switch-case list-view">
+                <h5>📋 List View (New Syntax)</h5>
+                <p>This uses the newer &#64;switch syntax!</p>
+              </div>
+            }
+            @case ('grid') {
+              <div class="switch-case grid-view">
+                <h5>🔲 Grid View (New Syntax)</h5>
+                <p>This uses the newer &#64;switch syntax!</p>
+              </div>
+            }
+            @case ('table') {
+              <div class="switch-case table-view">
+                <h5>📊 Table View (New Syntax)</h5>
+                <p>This uses the newer &#64;switch syntax!</p>
+              </div>
+            }
+            @case ('cards') {
+              <div class="switch-case cards-view">
+                <h5>🃏 Cards View (New Syntax)</h5>
+                <p>This uses the newer &#64;switch syntax!</p>
+              </div>
+            }
+            @default {
+              <div class="switch-default">
+                <p>Default case using newer &#64;switch syntax!</p>
+              </div>
+            }
+          }
         </div>
       </div>
     </div>
@@ -153,43 +349,6 @@
     </div>
   </section>
 
-  <!-- Forms Demo Section -->
-  <!-- <section class="demo-section">
-    <h2>📝 Forms with Directives</h2>
-    <p class="section-description">
-      See how directives work with Angular forms.
-    </p>
-
-    <div class="demo-card">
-      <h3>Template-Driven Forms</h3>
-      <p>Using ngModel directive for two-way data binding.</p>
-
-      <div class="demo-content">
-        <form (ngSubmit)="onSubmit()" class="form-demo">
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" [(ngModel)]="username" class="form-control"
-              placeholder="Enter your username">
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" [(ngModel)]="email" class="form-control"
-              placeholder="Enter your email">
-          </div>
-
-          <button type="submit" class="btn btn-primary">Submit Form</button>
-        </form>
-
-        <div class="form-preview">
-          <h4>Form Data Preview:</h4>
-          <p><strong>Username:</strong> {{ username || 'Not entered' }}</p>
-          <p><strong>Email:</strong> {{ email || 'Not entered' }}</p>
-        </div>
-      </div>
-    </div>
-  </section> -->
-
   <!-- Summary Section -->
   <section class="demo-section">
     <h2>📚 Summary</h2>
@@ -197,9 +356,9 @@
       <div class="summary-card">
         <h4>Structural Directives</h4>
         <ul>
-          <li><code>*ngIf</code> - Conditional rendering</li>
-          <li><code>*ngFor</code> - List rendering</li>
-          <li><code>*ngSwitch</code> - Multiple choice rendering</li>
+          <li><code>*ngIf</code> / <code>&#64;if</code> - Conditional rendering (show/hide elements based on conditions)</li>
+          <li><code>*ngFor</code> / <code>&#64;for</code> - List rendering with <strong>trackBy</strong> for performance and unique keys</li>
+          <li><code>*ngSwitch</code> / <code>&#64;switch</code> - Multiple choice rendering (display one of many templates)</li>
         </ul>
       </div>
 
@@ -213,11 +372,13 @@
       </div>
 
       <div class="summary-card">
-        <h4>Custom Directives</h4>
+        <h4>Performance & Best Practices</h4>
         <ul>
-          <li><code>appHighlight</code> - Custom hover effect</li>
-          <li>Can create your own directives</li>
-          <li>Use <code>&#64;Directive()</code> decorator</li>
+          <li>Always use <code>trackBy</code> with <code>*ngFor</code> or <code>&#64;for</code> to avoid duplicate key errors and improve rendering performance</li>
+          <li>Ensure <strong>unique keys</strong> for all items in a collection (e.g., use a unique <code>id</code> property)</li>
+          <li>Prefer modern syntax: <code>&#64;if</code>, <code>&#64;for</code>, <code>&#64;switch</code> for cleaner and more efficient templates (Angular 17+)</li>
+          <li>Use <code>OnPush</code> change detection for better performance in large lists</li>
+          <li>Handle edge cases (like empty arrays) to prevent runtime errors</li>
         </ul>
       </div>
     </div>
