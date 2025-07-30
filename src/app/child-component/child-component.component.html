@@ -1,0 +1,142 @@
+<div class="child-component">
+  <div class="child-header">
+    <h3>👶 Child Component</h3>
+    <p>This component receives data from parent and sends data back</p>
+  </div>
+
+  <!-- Data Received from Parent via @Input -->
+  <div class="input-section">
+    <h4>📥 Data Received from Parent (&#64;Input)</h4>
+
+    <div class="data-card">
+      <h5>Parent Message:</h5>
+      <p class="parent-message">{{ parentMessage || 'No message from parent' }}</p>
+    </div>
+
+    <div class="data-card">
+      <h5>Parent Data Object:</h5>
+      <div class="data-object">
+        <div><strong>Name:</strong> {{ parentData?.name || 'N/A' }}</div>
+        <div><strong>Age:</strong> {{ parentData?.age || 'N/A' }}</div>
+        <div><strong>City:</strong> {{ parentData?.city || 'N/A' }}</div>
+      </div>
+    </div>
+
+    <div class="data-card">
+      <h5>Parent Items Array:</h5>
+      <div class="items-list">
+        <div *ngFor="let item of parentItems; let i = index" class="item">
+          <span class="item-index">{{ i + 1 }}.</span>
+          <span class="item-text">{{ item }}</span>
+        </div>
+        <div *ngIf="!parentItems || parentItems.length === 0" class="empty-state">
+          No items from parent
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Child Form for Sending Data to Parent -->
+  <div class="output-section">
+    <h4>📤 Send Data to Parent (&#64;Output)</h4>
+
+    <div class="form-card">
+      <h5>Child Form:</h5>
+      <form (ngSubmit)="onSubmit()" class="child-form">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="childFormData.name"
+            class="form-control"
+            placeholder="Enter your name">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="childFormData.email"
+            class="form-control"
+            placeholder="Enter your email">
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message:</label>
+          <textarea
+            id="message"
+            name="message"
+            [(ngModel)]="childFormData.message"
+            class="form-control"
+            placeholder="Enter your message"
+            rows="3"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            Send Data to Parent
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="actions-card">
+      <h5>Quick Actions:</h5>
+      <div class="action-buttons">
+        <button (click)="sendMessageToParent()" class="btn btn-success">
+          Send Message to Parent
+        </button>
+        <button (click)="sendDataToParent()" class="btn btn-info">
+          Send Data to Parent
+        </button>
+        <button (click)="updateChildMessage()" class="btn btn-warning">
+          Update Child Message
+        </button>
+      </div>
+    </div>
+
+    <div class="child-data-card">
+      <h5>Child Internal Data:</h5>
+      <div class="data-display">
+        <div><strong>Child Message:</strong> {{ childMessage || 'No message set' }}</div>
+        <div><strong>Child Counter:</strong> {{ childCounter }}</div>
+        <div><strong>Child Property:</strong> {{ childProperty }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Communication Info -->
+  <div class="info-section">
+    <h4>💡 Communication Info</h4>
+    <div class="info-grid">
+      <div class="info-item">
+        <strong>Input Properties:</strong>
+        <ul>
+          <li><code>parentMessage</code> - String from parent</li>
+          <li><code>parentData</code> - Object from parent</li>
+          <li><code>parentItems</code> - Array from parent</li>
+        </ul>
+      </div>
+
+      <div class="info-item">
+        <strong>Output Events:</strong>
+        <ul>
+          <li><code>childMessageEvent</code> - Sends string to parent</li>
+          <li><code>childDataEvent</code> - Sends object to parent</li>
+        </ul>
+      </div>
+
+      <div class="info-item">
+        <strong>ViewChild Accessible:</strong>
+        <ul>
+          <li><code>childProperty</code> - Property accessible via ViewChild</li>
+          <li><code>childMethod()</code> - Method callable via ViewChild</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
