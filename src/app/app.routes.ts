@@ -10,6 +10,7 @@ import { LifecycleDemoComponent } from './lifecycle-demo/lifecycle-demo.componen
 import { ContentChildDemoComponent } from './content-child-demo/content-child-demo.component';
 import { TemplateDemoComponent } from './template-demo/template-demo.component';
 import { ParentChildCommunicationDemoComponent } from './parent-child-communication-demo/parent-child-communication-demo.component';
+import { ObservablesSignalsDemoComponent } from './observables-signals-demo/observables-signals-demo.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/html-ts-communication', pathMatch: 'full' },
@@ -23,5 +24,6 @@ export const routes: Routes = [
   { path: 'lifecycle-demo', component: LifecycleDemoComponent },
   { path: 'content-child-demo', component: ContentChildDemoComponent },
   { path: 'template-demo', component: TemplateDemoComponent },
-  { path: 'parent-child-communication-demo', component: ParentChildCommunicationDemoComponent }
+  { path: 'parent-child-communication-demo', component: ParentChildCommunicationDemoComponent },
+  { path: 'observables-signals-demo', component: ObservablesSignalsDemoComponent }
 ];
