@@ -1,0 +1,37 @@
+<div class="routing-demo-container">
+  <div class="demo-header">
+    <h1>Angular Routing - Part 1</h1>
+    <p>Learn the fundamentals of Angular routing including setup, navigation, and best practices</p>
+  </div>
+
+  <div class="routing-nav">
+    <a routerLink="./why-router" routerLinkActive="active" class="nav-tab">
+      <span class="tab-number">1</span>
+      <span class="tab-title">Why Router?</span>
+    </a>
+    <a routerLink="./setup-routes" routerLinkActive="active" class="nav-tab">
+      <span class="tab-number">2</span>
+      <span class="tab-title">Setup Routes</span>
+    </a>
+    <a routerLink="./router-links" routerLinkActive="active" class="nav-tab">
+      <span class="tab-number">3</span>
+      <span class="tab-title">Router Links</span>
+    </a>
+    <a routerLink="./navigation-paths" routerLinkActive="active" class="nav-tab">
+      <span class="tab-number">4</span>
+      <span class="tab-title">Navigation Paths</span>
+    </a>
+    <a routerLink="./styling-links" routerLinkActive="active" class="nav-tab">
+      <span class="tab-number">5</span>
+      <span class="tab-title">Styling Links</span>
+    </a>
+    <a routerLink="./programmatic-navigation" routerLinkActive="active" class="nav-tab">
+      <span class="tab-number">6</span>
+      <span class="tab-title">Programmatic Navigation</span>
+    </a>
+  </div>
+
+  <div class="demo-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

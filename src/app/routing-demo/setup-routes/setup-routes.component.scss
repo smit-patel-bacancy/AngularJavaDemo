@@ -1,0 +1,282 @@
+.setup-routes-container {
+  max-width: 100%;
+}
+
+.section {
+  margin-bottom: 3rem;
+
+  h2 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .intro {
+    font-size: 1.2rem;
+    color: #666;
+    text-align: center;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+.setup-steps {
+  margin-bottom: 4rem;
+
+  .step-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    border: 1px solid #e1e5e9;
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+
+      .step-number {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        color: #2c3e50;
+        font-size: 1.5rem;
+        margin: 0;
+      }
+    }
+
+    .step-content {
+      p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      .code-block {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        border: 1px solid #e1e5e9;
+        margin-top: 1rem;
+
+        h4 {
+          color: #2c3e50;
+          margin-bottom: 1rem;
+          font-size: 1.1rem;
+          font-weight: 600;
+        }
+
+        pre {
+          background: #2d3748;
+          color: #e2e8f0;
+          padding: 1rem;
+          border-radius: 6px;
+          overflow-x: auto;
+          margin: 0;
+          font-family: 'Courier New', monospace;
+          font-size: 0.9rem;
+          line-height: 1.4;
+
+          code {
+            color: inherit;
+          }
+        }
+      }
+    }
+  }
+}
+
+.route-types-section {
+  margin-bottom: 4rem;
+
+  h3 {
+    color: #2c3e50;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .route-types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+
+    .route-type-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border: 1px solid #e1e5e9;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      h4 {
+        color: #2c3e50;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .code-example {
+        background: #f8f9fa;
+        border-radius: 6px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid #667eea;
+
+        pre {
+          margin: 0;
+          font-family: 'Courier New', monospace;
+          font-size: 0.85rem;
+          color: #333;
+          line-height: 1.3;
+        }
+      }
+
+      p {
+        color: #666;
+        line-height: 1.5;
+        margin: 0;
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
+
+.best-practices-section {
+  margin-bottom: 4rem;
+
+  h3 {
+    color: #2c3e50;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .practices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+
+    .practice-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border: 1px solid #e1e5e9;
+      text-align: center;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      .practice-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      h4 {
+        color: #2c3e50;
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+      }
+
+      p {
+        color: #666;
+        line-height: 1.5;
+        margin: 0;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+.common-issues-section {
+  h3 {
+    color: #2c3e50;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .issues-list {
+    display: grid;
+    gap: 1.5rem;
+
+    .issue-item {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border-left: 4px solid #ff6b6b;
+
+      h4 {
+        color: #2c3e50;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      p {
+        color: #666;
+        line-height: 1.5;
+        margin-bottom: 0.5rem;
+
+        strong {
+          color: #2c3e50;
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .section h2 {
+    font-size: 2rem;
+  }
+
+  .setup-steps .step-card {
+    padding: 1.5rem;
+
+    .step-header {
+      flex-direction: column;
+      text-align: center;
+      gap: 0.5rem;
+
+      .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .route-types-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .practices-grid {
+    grid-template-columns: 1fr;
+  }
+}

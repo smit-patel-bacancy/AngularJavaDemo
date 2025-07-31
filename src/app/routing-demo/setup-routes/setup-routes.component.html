@@ -1,0 +1,238 @@
+<div class="setup-routes-container">
+  <div class="section">
+    <h2>Setting Up and Loading Routes in Angular</h2>
+    <p class="intro">
+      Learn how to configure routing in your Angular application step by step, from basic setup to advanced configurations.
+    </p>
+  </div>
+
+  <div class="setup-steps">
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-number">1</span>
+        <h3>Install Router Module</h3>
+      </div>
+      <div class="step-content">
+        <p>First, ensure the RouterModule is imported in your main application module.</p>
+        <div class="code-block">
+          <h4>app.config.ts</h4>
+          <pre><code>import {{ '{' }} ApplicationConfig {{ '}' }} from '&#64;angular/core';
+import {{ '{' }} provideRouter {{ '}' }} from '&#64;angular/router';
+import {{ '{' }} routes {{ '}' }} from './app.routes';
+
+export const appConfig: ApplicationConfig = {{ '{' }}
+  providers: [
+    provideRouter(routes)
+  ]
+{{ '}' }};</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-number">2</span>
+        <h3>Define Routes Array</h3>
+      </div>
+      <div class="step-content">
+        <p>Create a routes array that maps URLs to components.</p>
+        <div class="code-block">
+          <h4>app.routes.ts</h4>
+          <pre><code>import {{ '{' }} Routes {{ '}' }} from '&#64;angular/router';
+import {{ '{' }} HomeComponent {{ '}' }} from './home/home.component';
+import {{ '{' }} AboutComponent {{ '}' }} from './about/about.component';
+import {{ '{' }} ContactComponent {{ '}' }} from './contact/contact.component';
+
+export const routes: Routes = [
+  {{ '{' }} path: '', redirectTo: '/home', pathMatch: 'full' {{ '}' }},
+  {{ '{' }} path: 'home', component: HomeComponent {{ '}' }},
+  {{ '{' }} path: 'about', component: AboutComponent {{ '}' }},
+  {{ '{' }} path: 'contact', component: ContactComponent {{ '}' }},
+  {{ '{' }} path: '**', redirectTo: '/home' {{ '}' }} // Wildcard route
+];</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-number">3</span>
+        <h3>Add Router Outlet</h3>
+      </div>
+      <div class="step-content">
+        <p>Place the router-outlet directive in your main template to display routed components.</p>
+        <div class="code-block">
+          <h4>app.component.html</h4>
+          <pre><code>&lt;nav&gt;
+  &lt;a routerLink="/home"&gt;Home&lt;/a&gt;
+  &lt;a routerLink="/about"&gt;About&lt;/a&gt;
+  &lt;a routerLink="/contact"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;router-outlet&gt;&lt;/router-outlet&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <span class="step-number">4</span>
+        <h3>Import Router Directives</h3>
+      </div>
+      <div class="step-content">
+        <p>Import RouterLink and RouterLinkActive in your components.</p>
+        <div class="code-block">
+          <h4>app.component.ts</h4>
+          <pre><code>import {{ '{' }} Component {{ '}' }} from '&#64;angular/core';
+import {{ '{' }} RouterOutlet, RouterLink, RouterLinkActive {{ '}' }} from '&#64;angular/router';
+
+&#64;Component({{ '{' }}
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  templateUrl: './app.component.html'
+{{ '}' }})
+export class AppComponent {{ '{' }} {{ '}' }}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="route-types-section">
+    <h3>Different Types of Routes</h3>
+    <div class="route-types-grid">
+      <div class="route-type-card">
+        <h4>Basic Route</h4>
+        <div class="code-example">
+          <pre><code>{{ '{' }} path: 'home', component: HomeComponent {{ '}' }}</code></pre>
+        </div>
+        <p>Simple route that loads a component when the path matches.</p>
+      </div>
+
+      <div class="route-type-card">
+        <h4>Route with Parameters</h4>
+        <div class="code-example">
+          <pre><code>{{ '{' }} path: 'user/:id', component: UserComponent {{ '}' }}</code></pre>
+        </div>
+        <p>Route with dynamic parameters that can be accessed in the component.</p>
+      </div>
+
+      <div class="route-type-card">
+        <h4>Child Routes</h4>
+        <div class="code-example">
+          <pre><code>{{ '{' }}
+  path: 'admin',
+  component: AdminComponent,
+  children: [
+    {{ '{' }} path: 'users', component: UserListComponent {{ '}' }},
+    {{ '{' }} path: 'settings', component: SettingsComponent {{ '}' }}
+  ]
+{{ '}' }}</code></pre>
+        </div>
+        <p>Nested routes for complex navigation structures.</p>
+      </div>
+
+      <div class="route-type-card">
+        <h4>Lazy Loading</h4>
+        <div class="code-example">
+          <pre><code>{{ '{' }}
+  path: 'admin',
+  loadChildren: () =&gt; import('./admin/admin.module')
+    .then(m =&gt; m.AdminModule)
+{{ '}' }}</code></pre>
+        </div>
+        <p>Load modules on demand for better performance.</p>
+      </div>
+
+      <div class="route-type-card">
+        <h4>Route Guards</h4>
+        <div class="code-example">
+          <pre><code>{{ '{' }}
+  path: 'protected',
+  component: ProtectedComponent,
+  canActivate: [AuthGuard]
+{{ '}' }}</code></pre>
+        </div>
+        <p>Protect routes with authentication or authorization guards.</p>
+      </div>
+
+      <div class="route-type-card">
+        <h4>Wildcard Route</h4>
+        <div class="code-example">
+          <pre><code>{{ '{' }} path: '**', component: NotFoundComponent {{ '}' }}</code></pre>
+        </div>
+        <p>Catch all unmatched routes (404 page).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices-section">
+    <h3>Best Practices</h3>
+    <div class="practices-grid">
+      <div class="practice-card">
+        <div class="practice-icon">📁</div>
+        <h4>Organize Routes by Feature</h4>
+        <p>Group related routes together and use feature modules for better organization.</p>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-icon">🛡️</div>
+        <h4>Use Route Guards</h4>
+        <p>Protect sensitive routes with authentication and authorization guards.</p>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-icon">⚡</div>
+        <h4>Implement Lazy Loading</h4>
+        <p>Load modules on demand to improve initial application load time.</p>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-icon">🔗</div>
+        <h4>Use Relative Paths</h4>
+        <p>Use relative paths in child routes for better maintainability.</p>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-icon">📱</div>
+        <h4>Consider Mobile Navigation</h4>
+        <p>Design routes that work well with mobile navigation patterns.</p>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-icon">🧪</div>
+        <h4>Test Route Navigation</h4>
+        <p>Write tests to ensure routes work correctly and handle edge cases.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="common-issues-section">
+    <h3>Common Issues and Solutions</h3>
+    <div class="issues-list">
+      <div class="issue-item">
+        <h4>❌ Route Not Found</h4>
+        <p><strong>Problem:</strong> Route doesn't match any defined paths.</p>
+        <p><strong>Solution:</strong> Check path spelling and ensure route is properly defined.</p>
+      </div>
+
+      <div class="issue-item">
+        <h4>❌ Component Not Loading</h4>
+        <p><strong>Problem:</strong> Component doesn't appear in router-outlet.</p>
+        <p><strong>Solution:</strong> Verify component is imported and declared in the module.</p>
+      </div>
+
+      <div class="issue-item">
+        <h4>❌ Navigation Not Working</h4>
+        <p><strong>Problem:</strong> Links don't navigate to expected routes.</p>
+        <p><strong>Solution:</strong> Check routerLink syntax and ensure RouterLink is imported.</p>
+      </div>
+
+      <div class="issue-item">
+        <h4>❌ Child Routes Not Displaying</h4>
+        <p><strong>Problem:</strong> Child routes don't show in nested router-outlet.</p>
+        <p><strong>Solution:</strong> Add router-outlet in parent component template.</p>
+      </div>
+    </div>
+  </div>
+</div>
