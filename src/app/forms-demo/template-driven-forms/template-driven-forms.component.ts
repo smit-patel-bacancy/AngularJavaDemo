@@ -65,7 +65,7 @@ export class TemplateDrivenFormsComponent {
 
   // Form submission
   onSubmit() {
-    if (this.userForm.valid) {
+    if (this.userForm && this.userForm.valid) {
       console.log('Form submitted successfully!');
       console.log('Form data:', this.user);
       console.log('Form object:', this.userForm);
@@ -80,6 +80,11 @@ export class TemplateDrivenFormsComponent {
 
   // Show form state for understanding
   showFormState() {
+    if (!this.userForm) {
+      console.log('Form not initialized yet');
+      return;
+    }
+
     console.log('=== FORM STATE ===');
     console.log('Valid:', this.userForm.valid);
     console.log('Invalid:', this.userForm.invalid);
@@ -94,9 +99,15 @@ export class TemplateDrivenFormsComponent {
 
   // Mark all form controls as touched to show validation errors
   markFormGroupTouched() {
+    if (!this.userForm || !this.userForm.controls) {
+      return;
+    }
+
     Object.keys(this.userForm.controls).forEach(key => {
       const control = this.userForm.controls[key];
-      control.markAsTouched();
+      if (control) {
+        control.markAsTouched();
+      }
     });
   }
 
@@ -107,18 +118,22 @@ export class TemplateDrivenFormsComponent {
 
   // Patch specific values
   patchValues() {
-    this.userForm.form.patchValue({
-      firstName: 'Jane',
-      email: 'jane.doe@example.com',
-      address: {
-        city: 'Los Angeles'
-      }
-    });
+    if (this.userForm && this.userForm.form) {
+      this.userForm.form.patchValue({
+        firstName: 'Jane',
+        email: 'jane.doe@example.com',
+        address: {
+          city: 'Los Angeles'
+        }
+      });
+    }
   }
 
   // Reset form
   resetForm() {
-    this.userForm.reset();
+    if (this.userForm) {
+      this.userForm.reset();
+    }
     this.user = {
       firstName: '',
       lastName: '',
@@ -185,6 +200,10 @@ export class TemplateDrivenFormsComponent {
 
   // Get validation error message
   getErrorMessage(fieldName: string): string {
+    if (!this.userForm || !this.userForm.controls) {
+      return '';
+    }
+
     const control = this.userForm.controls[fieldName];
 
     if (control && control.errors) {
@@ -207,12 +226,20 @@ export class TemplateDrivenFormsComponent {
 
   // Check if field has error
   hasError(fieldName: string): boolean {
+    if (!this.userForm || !this.userForm.controls) {
+      return false;
+    }
+
     const control = this.userForm.controls[fieldName];
     return control ? (control.invalid && control.touched) : false;
   }
 
   // Check if field is valid
   isValid(fieldName: string): boolean {
+    if (!this.userForm || !this.userForm.controls) {
+      return false;
+    }
+
     const control = this.userForm.controls[fieldName];
     return control ? (control.valid && control.touched) : false;
   }

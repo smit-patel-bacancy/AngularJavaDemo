@@ -253,7 +253,7 @@
 
           <!-- Form Actions -->
           <div class="form-actions">
-            <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
+            <button type="submit" class="btn btn-primary" [disabled]="userForm?.invalid">
               Submit Form
             </button>
             <button type="button" class="btn btn-secondary" (click)="resetForm()">
@@ -277,25 +277,25 @@
         <h4>Form State Information</h4>
         <div class="state-grid">
           <div class="state-item">
-            <strong>Valid:</strong> {{ userForm.valid }}
+            <strong>Valid:</strong> {{ userForm?.valid }}
           </div>
           <div class="state-item">
-            <strong>Invalid:</strong> {{ userForm.invalid }}
+            <strong>Invalid:</strong> {{ userForm?.invalid }}
           </div>
           <div class="state-item">
-            <strong>Pristine:</strong> {{ userForm.pristine }}
+            <strong>Pristine:</strong> {{ userForm?.pristine }}
           </div>
           <div class="state-item">
-            <strong>Dirty:</strong> {{ userForm.dirty }}
+            <strong>Dirty:</strong> {{ userForm?.dirty }}
           </div>
           <div class="state-item">
-            <strong>Touched:</strong> {{ userForm.touched }}
+            <strong>Touched:</strong> {{ userForm?.touched }}
           </div>
           <div class="state-item">
-            <strong>Untouched:</strong> {{ userForm.untouched }}
+            <strong>Untouched:</strong> {{ userForm?.untouched }}
           </div>
           <div class="state-item">
-            <strong>Submitted:</strong> {{ userForm.submitted }}
+            <strong>Submitted:</strong> {{ userForm?.submitted }}
           </div>
         </div>
       </div>
@@ -340,7 +340,7 @@
 
         <div class="grouped-form-data">
           <h4>Grouped Form Data:</h4>
-          <pre>{{ groupedForm.value | json }}</pre>
+          <pre>{{ groupedForm?.value | json }}</pre>
         </div>
       </div>
     </section>
