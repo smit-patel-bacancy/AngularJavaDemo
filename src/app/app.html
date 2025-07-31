@@ -1,20 +1,100 @@
 <nav class="navbar">
   <div class="nav-container">
     <h1>Angular Learning Demo</h1>
-    <div class="nav-links">
-      <a routerLink="/html-ts-communication" routerLinkActive="active">HTML-TS Communication</a>
-      <a routerLink="/directives-demo" routerLinkActive="active">Directives Demo</a>
-      <a routerLink="/parent-child-communication" routerLinkActive="active">Parent-Child Communication</a>
-      <a routerLink="/components-deep-dive" routerLinkActive="active">Components Deep Dive</a>
-      <a routerLink="/header-component" routerLinkActive="active">Header Component</a>
-      <a routerLink="/user-card" routerLinkActive="active">User Card</a>
-      <a routerLink="/encapsulation-demo" routerLinkActive="active">Encapsulation Demo</a>
-      <a routerLink="/lifecycle-demo" routerLinkActive="active">Lifecycle Demo</a>
-      <a routerLink="/content-child-demo" routerLinkActive="active">Content Child Demo</a>
-      <a routerLink="/template-demo" routerLinkActive="active">Template Demo</a>
-      <a routerLink="/parent-child-communication-demo" routerLinkActive="active">Communication Demo</a>
-              <a routerLink="/observables-signals-demo" routerLinkActive="active">Observables & Signals</a>
-        <a routerLink="/services-dependency-injection-demo" routerLinkActive="active">Services & DI</a>
+
+    <!-- Mobile hamburger menu -->
+    <div class="hamburger" (click)="toggleMobileMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <div class="nav-links desktop-nav">
+      <!-- Core Concepts Dropdown -->
+      <div class="nav-dropdown">
+        <button class="dropdown-toggle" (click)="toggleDropdown('core')">
+          Core Concepts
+          <i class="dropdown-arrow">▼</i>
+        </button>
+        <div class="dropdown-menu" [class.show]="activeDropdown === 'core'">
+          <a routerLink="/html-ts-communication" routerLinkActive="active" (click)="closeDropdowns()">HTML-TS Communication</a>
+          <a routerLink="/directives-demo" routerLinkActive="active" (click)="closeDropdowns()">Directives Demo</a>
+          <a routerLink="/template-demo" routerLinkActive="active" (click)="closeDropdowns()">Template Demo</a>
+        </div>
+      </div>
+
+      <!-- Components Dropdown -->
+      <div class="nav-dropdown">
+        <button class="dropdown-toggle" (click)="toggleDropdown('components')">
+          Components
+          <i class="dropdown-arrow">▼</i>
+        </button>
+        <div class="dropdown-menu" [class.show]="activeDropdown === 'components'">
+          <a routerLink="/components-deep-dive" routerLinkActive="active" (click)="closeDropdowns()">Components Deep Dive</a>
+          <a routerLink="/header-component" routerLinkActive="active" (click)="closeDropdowns()">Header Component</a>
+          <a routerLink="/user-card" routerLinkActive="active" (click)="closeDropdowns()">User Card</a>
+          <a routerLink="/encapsulation-demo" routerLinkActive="active" (click)="closeDropdowns()">Encapsulation Demo</a>
+        </div>
+      </div>
+
+      <!-- Communication Dropdown -->
+      <div class="nav-dropdown">
+        <button class="dropdown-toggle" (click)="toggleDropdown('communication')">
+          Communication
+          <i class="dropdown-arrow">▼</i>
+        </button>
+        <div class="dropdown-menu" [class.show]="activeDropdown === 'communication'">
+          <a routerLink="/parent-child-communication" routerLinkActive="active" (click)="closeDropdowns()">Parent-Child Communication</a>
+          <a routerLink="/parent-child-communication-demo" routerLinkActive="active" (click)="closeDropdowns()">Communication Demo</a>
+          <a routerLink="/content-child-demo" routerLinkActive="active" (click)="closeDropdowns()">Content Child Demo</a>
+        </div>
+      </div>
+
+      <!-- Advanced Topics Dropdown -->
+      <div class="nav-dropdown">
+        <button class="dropdown-toggle" (click)="toggleDropdown('advanced')">
+          Advanced Topics
+          <i class="dropdown-arrow">▼</i>
+        </button>
+        <div class="dropdown-menu" [class.show]="activeDropdown === 'advanced'">
+          <a routerLink="/lifecycle-demo" routerLinkActive="active" (click)="closeDropdowns()">Lifecycle Demo</a>
+          <a routerLink="/observables-signals-demo" routerLinkActive="active" (click)="closeDropdowns()">Observables & Signals</a>
+          <a routerLink="/services-dependency-injection-demo" routerLinkActive="active" (click)="closeDropdowns()">Services & DI</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" [class.show]="isMobileMenuOpen">
+      <div class="mobile-nav-section">
+        <h3>Core Concepts</h3>
+        <a routerLink="/html-ts-communication" routerLinkActive="active" (click)="closeMobileMenu()">HTML-TS Communication</a>
+        <a routerLink="/directives-demo" routerLinkActive="active" (click)="closeMobileMenu()">Directives Demo</a>
+        <a routerLink="/template-demo" routerLinkActive="active" (click)="closeMobileMenu()">Template Demo</a>
+      </div>
+
+      <div class="mobile-nav-section">
+        <h3>Components</h3>
+        <a routerLink="/components-deep-dive" routerLinkActive="active" (click)="closeMobileMenu()">Components Deep Dive</a>
+        <a routerLink="/header-component" routerLinkActive="active" (click)="closeMobileMenu()">Header Component</a>
+        <a routerLink="/user-card" routerLinkActive="active" (click)="closeMobileMenu()">User Card</a>
+        <a routerLink="/encapsulation-demo" routerLinkActive="active" (click)="closeMobileMenu()">Encapsulation Demo</a>
+      </div>
+
+      <div class="mobile-nav-section">
+        <h3>Communication</h3>
+        <a routerLink="/parent-child-communication" routerLinkActive="active" (click)="closeMobileMenu()">Parent-Child Communication</a>
+        <a routerLink="/parent-child-communication-demo" routerLinkActive="active" (click)="closeMobileMenu()">Communication Demo</a>
+        <a routerLink="/content-child-demo" routerLinkActive="active" (click)="closeMobileMenu()">Content Child Demo</a>
+      </div>
+
+      <div class="mobile-nav-section">
+        <h3>Advanced Topics</h3>
+        <a routerLink="/lifecycle-demo" routerLinkActive="active" (click)="closeMobileMenu()">Lifecycle Demo</a>
+        <a routerLink="/observables-signals-demo" routerLinkActive="active" (click)="closeMobileMenu()">Observables & Signals</a>
+        <a routerLink="/services-dependency-injection-demo" routerLinkActive="active" (click)="closeMobileMenu()">Services & DI</a>
+      </div>
     </div>
   </div>
 </nav>
