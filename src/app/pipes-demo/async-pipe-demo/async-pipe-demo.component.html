@@ -1,0 +1,120 @@
+<div class="async-pipe-demo-container">
+  <h2>Understanding the Async Pipe</h2>
+
+  <div class="section">
+    <h3>What is the Async Pipe?</h3>
+    <p>The async pipe is a special pipe that automatically subscribes to an Observable or Promise and returns the latest value it has emitted. It also automatically unsubscribes when the component is destroyed, preventing memory leaks.</p>
+
+    <div class="key-points">
+      <h4>Key Benefits:</h4>
+      <ul>
+        <li><strong>Automatic Subscription:</strong> No need to manually subscribe</li>
+        <li><strong>Automatic Unsubscription:</strong> Prevents memory leaks</li>
+        <li><strong>Change Detection:</strong> Automatically triggers change detection</li>
+        <li><strong>Error Handling:</strong> Handles errors gracefully</li>
+        <li><strong>Loading States:</strong> Can handle loading and error states</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Live Examples</h3>
+    <div class="examples-grid">
+      <div *ngFor="let example of examples" class="example-card">
+        <h4>{{ example.name }}</h4>
+        <p>{{ example.description }}</p>
+        <div class="async-result">
+          <strong>Result:</strong> {{ example.observable | async }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Manual vs Async Pipe Comparison</h3>
+    <div class="comparison-demo">
+      <div class="comparison-column">
+        <h4>Manual Subscription</h4>
+        <div class="result-display">
+          <strong>Value:</strong> {{ manualSubscriptionValue || 'Waiting...' }}
+        </div>
+        <p class="note">Requires manual subscription and unsubscription</p>
+      </div>
+
+      <div class="comparison-column">
+        <h4>Async Pipe</h4>
+        <div class="result-display">
+          <strong>Value:</strong> {{ timerObservable | async }}
+        </div>
+        <p class="note">Automatic subscription and unsubscription</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Common Use Cases</h3>
+    <div class="use-cases">
+      <div class="use-case">
+        <h4>📡 HTTP Requests</h4>
+        <p>Handle API responses automatically</p>
+      </div>
+
+      <div class="use-case">
+        <h4>⏰ Timers & Intervals</h4>
+        <p>Display real-time updates</p>
+      </div>
+
+      <div class="use-case">
+        <h4>🔄 State Management</h4>
+        <p>React to state changes</p>
+      </div>
+
+      <div class="use-case">
+        <h4>📊 Real-time Data</h4>
+        <p>WebSocket connections</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Best Practices</h3>
+    <div class="best-practices">
+      <h4>Do's:</h4>
+      <ul>
+        <li>Use async pipe for simple data binding</li>
+        <li>Combine with *ngIf for loading states</li>
+        <li>Use error handling operators (catchError)</li>
+        <li>Consider using OnPush change detection strategy</li>
+      </ul>
+
+      <h4>Don'ts:</h4>
+      <ul>
+        <li>Don't use async pipe for complex transformations</li>
+        <li>Don't forget error handling</li>
+        <li>Don't use for observables that never complete</li>
+        <li>Don't use when you need manual control</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Performance Considerations</h3>
+    <div class="performance-tips">
+      <h4>Performance Benefits:</h4>
+      <ul>
+        <li><strong>Memory Management:</strong> Automatic unsubscription prevents leaks</li>
+        <li><strong>Change Detection:</strong> Only triggers when new values arrive</li>
+        <li><strong>Lazy Evaluation:</strong> Only subscribes when used in template</li>
+        <li><strong>OnPush Strategy:</strong> Works well with OnPush change detection</li>
+      </ul>
+
+      <h4>When Not to Use:</h4>
+      <ul>
+        <li>When you need manual control over subscription</li>
+        <li>For complex data transformations</li>
+        <li>When you need to share subscriptions across components</li>
+        <li>For observables that emit very frequently</li>
+      </ul>
+    </div>
+  </div>
+</div>

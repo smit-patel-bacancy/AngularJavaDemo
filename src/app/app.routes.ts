@@ -31,6 +31,7 @@ import { FormValidationDemoComponent } from './forms-demo/form-validation-demo/f
 import { FormGroupingDemoComponent } from './forms-demo/form-grouping-demo/form-grouping-demo.component';
 import { FormControlsDemoComponent } from './forms-demo/form-controls-demo/form-controls-demo.component';
 import { ReactiveFormsDemoComponent } from './forms-demo/reactive-forms-demo/reactive-forms-demo.component';
+import { PipesDemoComponent } from './pipes-demo/pipes-demo.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/html-ts-communication', pathMatch: 'full' },
@@ -47,6 +48,7 @@ export const routes: Routes = [
   { path: 'parent-child-communication-demo', component: ParentChildCommunicationDemoComponent },
   { path: 'observables-signals-demo', component: ObservablesSignalsDemoComponent },
   { path: 'services-dependency-injection-demo', component: ServicesDependencyInjectionDemoComponent },
+  { path: 'pipes-demo', component: PipesDemoComponent },
   { path: 'template-driven-forms', component: TemplateDrivenFormsComponent },
   { path: 'form-validation-demo', component: FormValidationDemoComponent },
   { path: 'form-grouping-demo', component: FormGroupingDemoComponent },

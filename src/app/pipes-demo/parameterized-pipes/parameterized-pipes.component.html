@@ -1,0 +1,154 @@
+<div class="parameterized-pipes-container">
+  <h2>Parameterized Pipes & Chaining</h2>
+
+  <div class="section">
+    <h3>📅 DatePipe Parameters</h3>
+    <div class="example">
+      <h4>Date Format Options</h4>
+      <div class="controls">
+        <label>Select Date Format:</label>
+        <select [(ngModel)]="dateFormat">
+          <option *ngFor="let format of dateFormats" [value]="format">{{ format }}</option>
+        </select>
+      </div>
+      <div class="results">
+        <div class="code">Original: {{ currentDate }}</div>
+        <div class="code">With format '{{ dateFormat }}': {{ currentDate | date:dateFormat }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>💰 CurrencyPipe Parameters</h3>
+    <div class="example">
+      <h4>Currency Options</h4>
+      <div class="controls">
+        <label>Currency Code:</label>
+        <select [(ngModel)]="currencyCode">
+          <option *ngFor="let code of currencyCodes" [value]="code">{{ code }}</option>
+        </select>
+        <label>Display Format:</label>
+        <select [(ngModel)]="currencyDisplay">
+          <option *ngFor="let display of currencyDisplays" [value]="display">{{ display }}</option>
+        </select>
+      </div>
+      <div class="results">
+        <div class="code">Original: {{ price }}</div>
+        <div class="code">Currency: {{ price | currency:currencyCode:currencyDisplay }}</div>
+        <div class="code">With format: {{ price | currency:currencyCode:currencyDisplay:'1.2-2' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>📊 NumberPipe Parameters</h3>
+    <div class="example">
+      <h4>Number Format Options</h4>
+      <div class="controls">
+        <label>Number Format:</label>
+        <select [(ngModel)]="numberFormat">
+          <option *ngFor="let format of numberFormats" [value]="format">{{ format }}</option>
+        </select>
+      </div>
+      <div class="results">
+        <div class="code">Original: {{ decimalNumber }}</div>
+        <div class="code">With format '{{ numberFormat }}': {{ decimalNumber | number:numberFormat }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>📈 PercentPipe Parameters</h3>
+    <div class="example">
+      <h4>Percent Format Options</h4>
+      <div class="controls">
+        <label>Percent Format:</label>
+        <select [(ngModel)]="percentFormat">
+          <option *ngFor="let format of percentFormats" [value]="format">{{ format }}</option>
+        </select>
+      </div>
+      <div class="results">
+        <div class="code">Original: {{ percentage }}</div>
+        <div class="code">With format '{{ percentFormat }}': {{ percentage | percent:percentFormat }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>📋 SlicePipe Parameters</h3>
+    <div class="example">
+      <h4>Array Slicing</h4>
+      <div class="controls">
+        <label>Start Index:</label>
+        <input type="number" [(ngModel)]="sliceStart" min="0" max="6">
+        <label>End Index:</label>
+        <input type="number" [(ngModel)]="sliceEnd" min="0" max="7">
+      </div>
+      <div class="results">
+        <div class="code">Original: {{ arrayOfStrings }}</div>
+        <div class="code">Slice {{ sliceStart }}:{{ sliceEnd }}: {{ arrayOfStrings | slice:sliceStart:sliceEnd }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>🔗 Chaining Multiple Pipes</h3>
+    <div class="example">
+      <h4>Pipe Chaining Examples</h4>
+      <div class="chaining-examples">
+        <div class="chaining-example">
+          <h5>Text Transformation Chain</h5>
+          <div class="code">Original: {{ chainingText }}</div>
+          <div class="code">uppercase → titlecase: {{ chainingText | uppercase | titlecase }}</div>
+          <div class="code">titlecase → slice:0:10: {{ chainingText | titlecase | slice:0:10 }}</div>
+        </div>
+
+        <div class="chaining-example">
+          <h5>Number Transformation Chain</h5>
+          <div class="code">Original: {{ chainingNumber }}</div>
+          <div class="code">number → currency: {{ chainingNumber | number:'1.2-2' | currency }}</div>
+        </div>
+
+        <div class="chaining-example">
+          <h5>Date Transformation Chain</h5>
+          <div class="code">Original: {{ chainingDate }}</div>
+          <div class="code">date → uppercase: {{ chainingDate | date:'full' | uppercase }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>💡 Parameter Syntax</h3>
+    <div class="syntax-examples">
+      <div class="syntax-example">
+        <h4>Single Parameter</h4>
+        <code>{{ '{{ value | pipeName:parameter }}' }}</code>
+        <p>Example: {{ '{{ price | currency:\'USD\' }}' }}</p>
+      </div>
+
+      <div class="syntax-example">
+        <h4>Multiple Parameters</h4>
+        <code>{{ '{{ value | pipeName:param1:param2:param3 }}' }}</code>
+        <p>Example: {{ '{{ price | currency:\'USD\':\'symbol\':\'1.2-2\' }}' }}</p>
+      </div>
+
+      <div class="syntax-example">
+        <h4>Chaining Pipes</h4>
+        <code>{{ '{{ value | pipe1:param1 | pipe2:param2 }}' }}</code>
+        <p>Example: {{ '{{ text | uppercase | slice:0:10 }}' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-section">
+    <h3>🎯 Best Practices</h3>
+    <ul>
+      <li>Use parameters to customize pipe behavior for your specific needs</li>
+      <li>Chain pipes from left to right - the output of one becomes the input of the next</li>
+      <li>Be mindful of performance when chaining multiple pipes</li>
+      <li>Some pipes have default parameters that you can override</li>
+      <li>String parameters should be quoted when they contain special characters</li>
+    </ul>
+  </div>
+</div>

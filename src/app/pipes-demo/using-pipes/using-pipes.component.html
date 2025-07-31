@@ -1,0 +1,122 @@
+<div class="using-pipes-container">
+  <h2>Using Built-in Angular Pipes</h2>
+
+  <div class="pipe-category">
+    <h3>📅 Date Pipes</h3>
+    <div class="examples">
+      <div class="example">
+        <h4>DatePipe</h4>
+        <div class="code">Original: {{ currentDate }}</div>
+        <div class="code">date: {{ currentDate | date }}</div>
+        <div class="code">date:'short': {{ currentDate | date:'short' }}</div>
+        <div class="code">date:'medium': {{ currentDate | date:'medium' }}</div>
+        <div class="code">date:'long': {{ currentDate | date:'long' }}</div>
+        <div class="code">date:'full': {{ currentDate | date:'full' }}</div>
+        <div class="code">date:'MM/dd/yyyy': {{ currentDate | date:'MM/dd/yyyy' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pipe-category">
+    <h3>🔤 Text Pipes</h3>
+    <div class="examples">
+      <div class="example">
+        <h4>UpperCasePipe & LowerCasePipe</h4>
+        <div class="code">Original: {{ sampleText }}</div>
+        <div class="code">uppercase: {{ sampleText | uppercase }}</div>
+        <div class="code">lowercase: {{ sampleText | lowercase }}</div>
+      </div>
+      <div class="example">
+        <h4>TitleCasePipe</h4>
+        <div class="code">Original: {{ sampleText }}</div>
+        <div class="code">titlecase: {{ sampleText | titlecase }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pipe-category">
+    <h3>💰 Number Pipes</h3>
+    <div class="examples">
+      <div class="example">
+        <h4>CurrencyPipe</h4>
+        <div class="code">Original: {{ price }}</div>
+        <div class="code">currency: {{ price | currency }}</div>
+        <div class="code">currency:'EUR': {{ price | currency:'EUR' }}</div>
+        <div class="code">currency:'USD':'symbol':'1.2-2': {{ price | currency:'USD':'symbol':'1.2-2' }}</div>
+      </div>
+      <div class="example">
+        <h4>DecimalPipe</h4>
+        <div class="code">Original: {{ decimalNumber }}</div>
+        <div class="code">number:'1.2-2': {{ decimalNumber | number:'1.2-2' }}</div>
+        <div class="code">number:'1.4-4': {{ decimalNumber | number:'1.4-4' }}</div>
+      </div>
+      <div class="example">
+        <h4>PercentPipe</h4>
+        <div class="code">Original: {{ percentage }}</div>
+        <div class="code">percent: {{ percentage | percent }}</div>
+        <div class="code">percent:'1.0-2': {{ percentage | percent:'1.0-2' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pipe-category">
+    <h3>📋 Array Pipes</h3>
+    <div class="examples">
+      <div class="example">
+        <h4>SlicePipe</h4>
+        <div class="code">Original: {{ arrayOfStrings }}</div>
+        <div class="code">slice:0:3: {{ arrayOfStrings | slice:0:3 }}</div>
+        <div class="code">slice:1:4: {{ arrayOfStrings | slice:1:4 }}</div>
+        <div class="code">slice:-3: {{ arrayOfStrings | slice:-3 }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pipe-category">
+    <h3>🔍 Object Pipes</h3>
+    <div class="examples">
+      <div class="example">
+        <h4>JsonPipe</h4>
+        <div class="code">Original: {{ jsonObject }}</div>
+        <div class="code">json: {{ jsonObject | json }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pipe-category">
+    <h3>⚡ Async Pipe</h3>
+    <div class="examples">
+      <div class="example">
+        <h4>AsyncPipe</h4>
+        <div class="code">Promise result: {{ promiseValue | async }}</div>
+        <div class="note">This will show "Async data loaded!" after 2 seconds</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pipe-category">
+    <h3>🎯 KeyValue Pipe</h3>
+    <div class="examples">
+      <div class="example">
+        <h4>KeyValuePipe</h4>
+        <div class="code">Object entries:</div>
+        <ul>
+          <li *ngFor="let item of jsonObject | keyvalue">
+            {{ item.key }}: {{ item.value }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-section">
+    <h3>💡 Tips for Using Pipes</h3>
+    <ul>
+      <li>Pipes are pure by default, meaning they only execute when their input changes</li>
+      <li>You can chain multiple pipes using the pipe operator (|)</li>
+      <li>Some pipes accept parameters separated by colons</li>
+      <li>The async pipe automatically handles subscription and unsubscription</li>
+      <li>Custom pipes can be created for specific transformation needs</li>
+    </ul>
+  </div>
+</div>

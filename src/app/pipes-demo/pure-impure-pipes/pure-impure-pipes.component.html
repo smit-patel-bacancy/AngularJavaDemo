@@ -1,0 +1,137 @@
+<div class="pure-impure-pipes-container">
+  <h2>Pure and Impure Pipes</h2>
+
+  <div class="section">
+    <h3>What are Pure and Impure Pipes?</h3>
+    <p>Pipes can be either <strong>pure</strong> or <strong>impure</strong>, which determines when Angular executes the pipe's transform method during change detection.</p>
+
+    <div class="key-points">
+      <h4>Pure Pipes (Default):</h4>
+      <ul>
+        <li>Only execute when their input values change</li>
+        <li>More performant as they don't run unnecessarily</li>
+        <li>Should be used for most transformations</li>
+        <li>Cannot detect changes in object properties or array elements</li>
+      </ul>
+
+      <h4>Impure Pipes:</h4>
+      <ul>
+        <li>Execute on every change detection cycle</li>
+        <li>Can detect changes in object properties and array elements</li>
+        <li>Less performant but more flexible</li>
+        <li>Should be used sparingly</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Interactive Demo</h3>
+    <div class="interactive-demo">
+      <h4>Test the difference:</h4>
+      <p>Click the button below to trigger change detection. Watch the console to see when each pipe executes.</p>
+
+      <div class="demo-controls">
+        <button (click)="triggerChangeDetection()" class="demo-button">
+          Trigger Change Detection (Counter: {{ counter }})
+        </button>
+      </div>
+
+      <div class="demo-results">
+        <div class="result-group">
+          <h5>Pure Pipe Results:</h5>
+          <div class="result-item">
+            <strong>Original:</strong> {{ sampleText }}
+          </div>
+          <div class="result-item">
+            <strong>Pure Pipe:</strong> {{ sampleText | purePipe }}
+          </div>
+        </div>
+
+        <div class="result-group">
+          <h5>Impure Pipe Results:</h5>
+          <div class="result-item">
+            <strong>Original:</strong> {{ sampleText }}
+          </div>
+          <div class="result-item">
+            <strong>Impure Pipe:</strong> {{ sampleText | impurePipe }}
+          </div>
+        </div>
+      </div>
+
+      <div class="explanation">
+        <h5>What to observe:</h5>
+        <ul>
+          <li><strong>Pure Pipe:</strong> Only logs when you change the input text</li>
+          <li><strong>Impure Pipe:</strong> Logs on every button click (change detection)</li>
+          <li><strong>Performance:</strong> Pure pipes are much more efficient</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Predefined Examples</h3>
+    <div class="examples-grid">
+      <div *ngFor="let example of examples" class="example-card">
+        <h4>{{ example.description }}</h4>
+        <div class="example-content">
+          <div class="input-text">
+            <strong>Input:</strong> "{{ example.text }}"
+          </div>
+          <div class="pure-result">
+            <strong>Pure Pipe:</strong> {{ example.text | purePipe }}
+          </div>
+          <div class="impure-result">
+            <strong>Impure Pipe:</strong> {{ example.text | impurePipe }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>When to Use Each Type</h3>
+    <div class="usage-guidelines">
+      <div class="guideline">
+        <h4>Use Pure Pipes When:</h4>
+        <ul>
+          <li>Transforming primitive values (strings, numbers, booleans)</li>
+          <li>Input values change infrequently</li>
+          <li>Performance is important</li>
+          <li>Transformation is deterministic</li>
+        </ul>
+      </div>
+
+      <div class="guideline">
+        <h4>Use Impure Pipes When:</h4>
+        <ul>
+          <li>Transforming objects or arrays</li>
+          <li>Need to detect changes in object properties</li>
+          <li>Transformation depends on external state</li>
+          <li>Real-time updates are required</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Performance Considerations</h3>
+    <div class="performance-tips">
+      <h4>Performance Impact:</h4>
+      <ul>
+        <li><strong>Pure Pipes:</strong> Only execute when input changes, very efficient</li>
+        <li><strong>Impure Pipes:</strong> Execute on every change detection cycle</li>
+        <li><strong>Memory Usage:</strong> Impure pipes can cause memory leaks if not careful</li>
+        <li><strong>CPU Usage:</strong> Impure pipes can impact performance in large applications</li>
+      </ul>
+
+      <h4>Best Practices:</h4>
+      <ul>
+        <li>Always use pure pipes unless you specifically need impure behavior</li>
+        <li>Keep impure pipe transformations lightweight</li>
+        <li>Consider using getters or computed properties instead of impure pipes</li>
+        <li>Monitor performance when using impure pipes</li>
+      </ul>
+    </div>
+  </div>
+</div>

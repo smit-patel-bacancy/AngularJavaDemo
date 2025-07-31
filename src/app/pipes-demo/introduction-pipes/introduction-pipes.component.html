@@ -1,0 +1,71 @@
+<div class="introduction-container">
+  <h2>Introduction to Angular Pipes</h2>
+
+  <div class="section">
+    <h3>What are Pipes?</h3>
+    <p>Pipes are simple functions that transform input data into a desired output format. They are used in template expressions to transform data before displaying it to the user.</p>
+
+    <div class="key-points">
+      <h4>Key Benefits:</h4>
+      <ul>
+        <li><strong>Data Transformation:</strong> Convert data from one format to another</li>
+        <li><strong>Template Cleanliness:</strong> Keep templates readable by moving transformation logic to pipes</li>
+        <li><strong>Reusability:</strong> Use the same pipe across multiple components</li>
+        <li><strong>Performance:</strong> Pipes are optimized for change detection</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Built-in Pipes Examples</h3>
+    <div class="examples-grid">
+      <div *ngFor="let example of pipeExamples" class="example-card">
+        <h4>{{ example.name }}</h4>
+        <div class="code-example">
+          <code>{{ example.example }}</code>
+        </div>
+        <div class="result">
+          <strong>Result:</strong> {{ example.result }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Common Use Cases</h3>
+    <div class="use-cases">
+      <div class="use-case">
+        <h4>📅 Date Formatting</h4>
+        <p>Transform timestamps into readable date formats</p>
+      </div>
+      <div class="use-case">
+        <h4>💰 Currency Display</h4>
+        <p>Format numbers as currency with proper symbols</p>
+      </div>
+      <div class="use-case">
+        <h4>📊 Number Formatting</h4>
+        <p>Format numbers with decimal places, percentages</p>
+      </div>
+      <div class="use-case">
+        <h4>🔤 Text Transformation</h4>
+        <p>Convert text to uppercase, lowercase, or title case</p>
+      </div>
+      <div class="use-case">
+        <h4>📋 Array Operations</h4>
+        <p>Filter, sort, and slice arrays for display</p>
+      </div>
+      <div class="use-case">
+        <h4>⚡ Async Data</h4>
+        <p>Handle observables and promises automatically</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Pipe Syntax</h3>
+    <div class="syntax-example">
+      <code>{{ '{{ value | pipeName:parameter1:parameter2 }}' }}</code>
+    </div>
+    <p>The pipe operator (|) is used to apply a pipe to a value. Parameters are separated by colons.</p>
+  </div>
+</div>
