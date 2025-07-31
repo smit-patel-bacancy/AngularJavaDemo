@@ -1,0 +1,204 @@
+<div class="parent-child-communication-demo">
+  <div class="demo-section">
+    <h2>🔄 Parent-Child Communication Demo</h2>
+
+    <div class="communication-overview">
+      <h3>📚 Communication Patterns Overview</h3>
+      <div class="pattern-grid">
+        <div class="pattern">
+          <h4>📥 Parent → Child</h4>
+          <ul>
+            <li>&#64;Input() properties</li>
+            <li>Data binding</li>
+            <li>Template context</li>
+          </ul>
+        </div>
+
+        <div class="pattern">
+          <h4>📤 Child → Parent</h4>
+          <ul>
+            <li>&#64;Output() events</li>
+            <li>EventEmitter</li>
+            <li>Method calls</li>
+          </ul>
+        </div>
+
+        <div class="pattern">
+          <h4>🔄 Two-way Binding</h4>
+          <ul>
+            <li>[(ngModel)]</li>
+            <li>Shared state</li>
+            <li>Bidirectional sync</li>
+          </ul>
+        </div>
+
+        <div class="pattern">
+          <h4>🔍 ViewChild</h4>
+          <ul>
+            <li>Direct access</li>
+            <li>Method calls</li>
+            <li>Property access</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="parent-controls">
+      <h3>👨‍💼 Parent Component Controls</h3>
+
+      <div class="control-groups">
+        <div class="control-group">
+          <h4>📥 Parent to Child Communication</h4>
+
+          <div class="input-controls">
+            <div class="input-item">
+              <label>Parent Message:</label>
+              <input
+                type="text"
+                [value]="parentMessage"
+                (input)="onParentMessageChange($event)"
+                placeholder="Enter message for child"
+                class="input-field">
+              <button (click)="updateParentMessage()" class="btn btn-primary">
+                Update Message
+              </button>
+            </div>
+
+            <div class="input-item">
+              <label>Parent Data:</label>
+              <button (click)="updateParentData()" class="btn btn-secondary">
+                Update Parent Data
+              </button>
+              <div class="data-display">
+                <div *ngFor="let key of getObjectKeys(parentData)" class="data-row">
+                  <span class="key">{{ key }}:</span>
+                  <span class="value">{{ parentData[key] }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="input-item">
+              <label>Shared Value:</label>
+              <input
+                type="text"
+                [value]="sharedValue"
+                (input)="onSharedValueInput($event)"
+                placeholder="Enter shared value"
+                class="input-field">
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h4>📤 Child to Parent Communication</h4>
+
+          <div class="child-messages">
+            <h5>Messages from Child:</h5>
+            <div class="message-list">
+              <div *ngFor="let message of childMessages" class="message-item">
+                {{ message }}
+              </div>
+              <div *ngIf="childMessages.length === 0" class="no-messages">
+                No messages from child yet...
+              </div>
+            </div>
+            <button (click)="clearChildMessages()" class="btn btn-clear">
+              Clear Messages
+            </button>
+          </div>
+
+          <div class="child-data">
+            <h5>Data from Child:</h5>
+            <div class="data-display">
+              <div *ngFor="let key of getObjectKeys(childData)" class="data-row">
+                <span class="key">{{ key }}:</span>
+                <span class="value">{{ childData[key] }}</span>
+              </div>
+              <div *ngIf="getObjectKeys(childData).length === 0" class="no-data">
+                No data from child yet...
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h4>🔍 ViewChild Communication</h4>
+
+          <div class="viewchild-controls">
+            <button (click)="callChildMethod()" class="btn btn-primary">
+              Call Child Method
+            </button>
+            <button (click)="getChildProperty()" class="btn btn-secondary">
+              Get Child Property
+            </button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h4>🔄 Two-way Binding Demo</h4>
+
+          <div class="two-way-demo">
+            <p><strong>Shared Value:</strong> {{ sharedValue }}</p>
+            <p>This value is synchronized between parent and child components.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="child-component-demo">
+      <h3>👶 Child Component</h3>
+
+      <app-communication-child
+        #childComponentRef
+        [parentMessage]="parentMessage"
+        [parentData]="parentData"
+        [sharedValue]="sharedValue"
+        (childMessage)="onChildMessage($event)"
+        (childDataUpdate)="onChildDataUpdate($event)"
+        (sharedValueChange)="onSharedValueChange($event)">
+
+        <div slot="projected-content">
+          <h4>📦 Projected Content</h4>
+          <p>{{ projectedContent }}</p>
+          <button class="btn btn-primary">Projected Button</button>
+        </div>
+
+      </app-communication-child>
+    </div>
+
+    <div class="communication-examples">
+      <h3>💡 Communication Examples</h3>
+
+      <div class="example-grid">
+        <div class="example">
+          <h4>&#64;Input() Example</h4>
+          <pre><code>&#64;Input() parentMessage: string = '';
+&#64;Input() parentData: any = {{ '{' }}{{ '}' }};</code></pre>
+          <p>Parent passes data to child via property binding</p>
+        </div>
+
+        <div class="example">
+          <h4>&#64;Output() Example</h4>
+          <pre><code>&#64;Output() childMessage = new EventEmitter&lt;string&gt;();
+childMessage.emit('Hello from child!');</code></pre>
+          <p>Child sends events to parent via EventEmitter</p>
+        </div>
+
+        <div class="example">
+          <h4>Two-way Binding</h4>
+          <pre><code>[(ngModel)]="sharedValue"
+[sharedValue]="sharedValue"
+(sharedValueChange)="onChange($event)"</code></pre>
+          <p>Bidirectional data synchronization</p>
+        </div>
+
+        <div class="example">
+          <h4>ViewChild Access</h4>
+          <pre><code>&#64;ViewChild('childRef') childRef!: ChildComponent;
+childRef.childMethod();</code></pre>
+          <p>Direct access to child component</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

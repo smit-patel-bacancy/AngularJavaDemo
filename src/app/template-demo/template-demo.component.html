@@ -1,0 +1,236 @@
+<div class="template-demo">
+  <div class="demo-section">
+    <h2>📄 Template Directives Demo</h2>
+
+    <div class="explanation">
+      <h3>📚 Understanding Template Directives</h3>
+      <div class="directive-comparison">
+        <div class="directive">
+          <h4>🎯 ng-template</h4>
+          <ul>
+            <li>Defines a template that can be referenced and reused</li>
+            <li>Not rendered by default - needs to be explicitly used</li>
+            <li>Can pass context data to templates</li>
+            <li>Used with structural directives like *ngIf, *ngFor</li>
+          </ul>
+        </div>
+
+        <div class="directive">
+          <h4>📦 ng-container</h4>
+          <ul>
+            <li>Logical container that doesn't create a DOM element</li>
+            <li>Used to group elements without adding extra markup</li>
+            <li>Can apply multiple structural directives</li>
+            <li>Helps avoid unnecessary wrapper elements</li>
+          </ul>
+        </div>
+
+        <div class="directive">
+          <h4>🔄 ng-content</h4>
+          <ul>
+            <li>Projects content from parent into child component</li>
+            <li>Enables content projection</li>
+            <li>Can be selective with selectors</li>
+            <li>Creates flexible, reusable components</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="template-examples">
+      <h3>🔄 ng-template Examples</h3>
+
+      <div class="example-group">
+        <h4>1. Basic Template with Context</h4>
+        <div class="template-demo-area">
+          <ng-template #customTemplate let-value="customValue" let-default="$implicit">
+            <div class="template-output">
+              <strong>Default Value:</strong> {{ default }}<br>
+              <strong>Custom Value:</strong> {{ value }}<br>
+              <strong>Items Count:</strong> {{ items.length }}
+            </div>
+          </ng-template>
+
+          <div class="template-usage">
+            <button (click)="toggleTemplate()" class="btn btn-primary">
+              {{ showTemplate ? 'Hide' : 'Show' }} Template
+            </button>
+
+            <div *ngIf="showTemplate" class="template-result">
+              <ng-container *ngTemplateOutlet="customTemplate; context: templateContext"></ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-group">
+        <h4>2. Dynamic Template Selection</h4>
+        <div class="template-selection">
+          <div class="selection-controls">
+            <button
+              *ngFor="let template of ['default', 'detailed', 'simple']"
+              (click)="changeTemplate(template)"
+              [class.active]="selectedTemplate === template"
+              class="btn btn-secondary">
+              {{ template | titlecase }} Template
+            </button>
+          </div>
+
+          <div class="template-display">
+            <ng-container [ngSwitch]="selectedTemplate">
+              <ng-template ngSwitchCase="default">
+                <div class="template-card default">
+                  <h5>Default Template</h5>
+                  <p>This is the default template with basic information.</p>
+                  <p><strong>User:</strong> {{ user.name }}</p>
+                </div>
+              </ng-template>
+
+              <ng-template ngSwitchCase="detailed">
+                <div class="template-card detailed">
+                  <h5>Detailed Template</h5>
+                  <p><strong>Name:</strong> {{ user.name }}</p>
+                  <p><strong>Email:</strong> {{ user.email }}</p>
+                  <p><strong>Role:</strong> {{ user.role }}</p>
+                  <p><strong>Timestamp:</strong> {{ getTemplateContext().timestamp }}</p>
+                </div>
+              </ng-template>
+
+              <ng-template ngSwitchCase="simple">
+                <div class="template-card simple">
+                  <h5>Simple Template</h5>
+                  <p>Just the essentials: {{ user.name }}</p>
+                </div>
+              </ng-template>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-examples">
+      <h3>📦 ng-container Examples</h3>
+
+      <div class="example-group">
+        <h4>1. Multiple Structural Directives</h4>
+        <div class="container-demo">
+          <p>Without ng-container (creates extra div):</p>
+          <div *ngFor="let item of items">
+            {{ item }}
+          </div>
+
+          <p>With ng-container (no extra element):</p>
+          <ng-container *ngFor="let item of items">
+            <span>{{ item }}</span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="example-group">
+        <h4>2. Conditional Grouping</h4>
+        <div class="conditional-grouping">
+          <ng-container *ngIf="user.role === 'Developer'">
+            <div class="dev-info">
+              <h5>Developer Information</h5>
+              <p>Name: {{ user.name }}</p>
+              <p>Email: {{ user.email }}</p>
+            </div>
+            <div class="dev-actions">
+              <button class="btn btn-primary">View Code</button>
+              <button class="btn btn-secondary">Review PR</button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-examples">
+      <h3>🔄 ng-content Examples</h3>
+
+      <div class="example-group">
+        <h4>1. Basic Content Projection</h4>
+        <div class="content-demo">
+          <div class="projection-container">
+            <ng-content></ng-content>
+          </div>
+          <div class="projection-content">
+            <p>This content will be projected into the container above.</p>
+            <button class="btn btn-primary">Projected Button</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-group">
+        <h4>2. Named Content Projection</h4>
+        <div class="named-projection-demo">
+          <div class="card-layout">
+            <div class="card-header">
+              <ng-content select="[slot=header]"></ng-content>
+            </div>
+            <div class="card-body">
+              <ng-content select="[slot=body]"></ng-content>
+            </div>
+            <div class="card-footer">
+              <ng-content select="[slot=footer]"></ng-content>
+            </div>
+          </div>
+
+          <div class="projection-sources">
+            <div slot="header" class="header-content">
+              <h5>Card Header</h5>
+              <p>This is the header content</p>
+            </div>
+            <div slot="body" class="body-content">
+              <p>This is the main body content with some important information.</p>
+              <ul>
+                <li>Feature 1</li>
+                <li>Feature 2</li>
+                <li>Feature 3</li>
+              </ul>
+            </div>
+            <div slot="footer" class="footer-content">
+              <button class="btn btn-primary">Action 1</button>
+              <button class="btn btn-secondary">Action 2</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="usage-comparison">
+      <h3>💡 When to Use Each Directive</h3>
+
+      <div class="comparison-grid">
+        <div class="comparison-item">
+          <h4>Use ng-template when:</h4>
+          <ul>
+            <li>You need reusable template logic</li>
+            <li>Passing context data to templates</li>
+            <li>Creating custom structural directives</li>
+            <li>Complex conditional rendering</li>
+          </ul>
+        </div>
+
+        <div class="comparison-item">
+          <h4>Use ng-container when:</h4>
+          <ul>
+            <li>Grouping elements without extra markup</li>
+            <li>Applying multiple structural directives</li>
+            <li>Avoiding wrapper elements</li>
+            <li>Logical grouping without visual impact</li>
+          </ul>
+        </div>
+
+        <div class="comparison-item">
+          <h4>Use ng-content when:</h4>
+          <ul>
+            <li>Creating flexible, reusable components</li>
+            <li>Allowing parent to inject content</li>
+            <li>Building component libraries</li>
+            <li>Creating wrapper components</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

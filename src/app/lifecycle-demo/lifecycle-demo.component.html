@@ -1,0 +1,81 @@
+<div class="lifecycle-demo">
+  <div class="demo-section">
+    <h2>🔄 Angular Component Lifecycle Hooks Demo</h2>
+
+    <div class="controls">
+      <div class="control-group">
+        <h3>Input Property Changes</h3>
+        <p><strong>Current Input Value:</strong> {{ demoInput }}</p>
+        <button (click)="updateInput()" class="btn btn-primary">
+          Update Input Property
+        </button>
+      </div>
+
+      <div class="control-group">
+        <h3>Component Visibility</h3>
+        <button (click)="toggleChild()" class="btn btn-secondary">
+          {{ showChild ? 'Hide' : 'Show' }} Child Component
+        </button>
+      </div>
+
+      <div class="control-group">
+        <h3>Counter (Triggers Change Detection)</h3>
+        <p><strong>Counter:</strong> {{ counter }}</p>
+        <p class="note">This counter updates every 2 seconds to trigger change detection</p>
+      </div>
+    </div>
+
+    <div class="view-child-demo">
+      <h3>ViewChild Demo</h3>
+      <div #viewChildElement class="view-child-element">
+        This is a ViewChild element that will be accessed in ngAfterViewInit
+      </div>
+    </div>
+
+    <div class="lifecycle-logs">
+      <div class="logs-header">
+        <h3>📋 Lifecycle Hooks Log</h3>
+        <button (click)="clearLogs()" class="btn btn-clear">Clear Logs</button>
+      </div>
+
+      <div class="logs-container">
+        <div *ngFor="let log of lifecycleLogs" class="log-entry">
+          {{ log }}
+        </div>
+        <div *ngIf="lifecycleLogs.length === 0" class="no-logs">
+          No lifecycle events logged yet...
+        </div>
+      </div>
+    </div>
+
+    <div class="lifecycle-explanation">
+      <h3>📚 Lifecycle Hooks Explanation</h3>
+      <div class="hook-list">
+        <div class="hook-item">
+          <strong>Constructor:</strong> Called when component is instantiated
+        </div>
+        <div class="hook-item">
+          <strong>ngOnChanges:</strong> Called when input properties change
+        </div>
+        <div class="hook-item">
+          <strong>ngOnInit:</strong> Called after component is initialized
+        </div>
+        <div class="hook-item">
+          <strong>ngAfterContentInit:</strong> Called after content projection is initialized
+        </div>
+        <div class="hook-item">
+          <strong>ngAfterContentChecked:</strong> Called after content projection is checked
+        </div>
+        <div class="hook-item">
+          <strong>ngAfterViewInit:</strong> Called after view is initialized
+        </div>
+        <div class="hook-item">
+          <strong>ngAfterViewChecked:</strong> Called after view is checked
+        </div>
+        <div class="hook-item">
+          <strong>ngOnDestroy:</strong> Called when component is destroyed
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

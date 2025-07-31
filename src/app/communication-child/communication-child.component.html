@@ -1,0 +1,121 @@
+<div class="communication-child">
+  <div class="child-container">
+    <h3>👶 Child Component</h3>
+
+    <div class="communication-section">
+      <h4>📥 Input Properties (Parent → Child)</h4>
+
+      <div class="input-display">
+        <div class="input-item">
+          <strong>Parent Message:</strong>
+          <span class="value">{{ parentMessage }}</span>
+        </div>
+
+        <div class="input-item">
+          <strong>Parent Data:</strong>
+          <div class="data-display">
+            <div *ngFor="let key of getObjectKeys(parentData)" class="data-row">
+              <span class="key">{{ key }}:</span>
+              <span class="value">{{ parentData[key] }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-item">
+          <strong>Shared Value:</strong>
+          <span class="value">{{ sharedValue }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="communication-section">
+      <h4>📤 Output Events (Child → Parent)</h4>
+
+      <div class="child-actions">
+        <button (click)="sendMessageToParent()" class="btn btn-primary">
+          Send Message to Parent
+        </button>
+
+        <button (click)="updateParentData()" class="btn btn-secondary">
+          Update Parent Data
+        </button>
+
+        <button (click)="updateSharedValue()" class="btn btn-success">
+          Update Shared Value
+        </button>
+      </div>
+    </div>
+
+    <div class="communication-section">
+      <h4>🔄 Two-way Binding</h4>
+
+      <div class="two-way-binding">
+        <label for="childInput">Child Input:</label>
+        <input
+          id="childInput"
+          type="text"
+          [value]="childInputValue"
+          (input)="onInputChange($event)"
+          placeholder="Type something..."
+          class="input-field">
+
+        <p class="input-display-text">
+          <strong>Current Value:</strong> {{ childInputValue || '(empty)' }}
+        </p>
+      </div>
+    </div>
+
+    <div class="communication-section">
+      <h4>📋 Child State</h4>
+
+      <div class="child-state">
+        <div class="state-item">
+          <strong>Child Property:</strong>
+          <span class="value">{{ childProperty }}</span>
+        </div>
+
+        <div class="state-item">
+          <strong>Child Counter:</strong>
+          <span class="value">{{ childCounter }}</span>
+        </div>
+
+        <div class="state-item">
+          <strong>Method Calls:</strong>
+          <span class="value">{{ childCounter }} times</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="communication-section">
+      <h4>📜 Received Messages History</h4>
+
+      <div class="message-history">
+        <div *ngFor="let message of receivedMessages" class="message-item">
+          {{ message }}
+        </div>
+        <div *ngIf="receivedMessages.length === 0" class="no-messages">
+          No messages received yet...
+        </div>
+      </div>
+    </div>
+
+    <div class="communication-section">
+      <h4>📊 Data History</h4>
+
+      <div class="data-history">
+        <div *ngFor="let entry of dataHistory" class="history-item">
+          <div class="timestamp">{{ entry.timestamp }}</div>
+          <div class="data-content">
+            <div *ngFor="let key of getObjectKeys(entry.data)" class="data-row">
+              <span class="key">{{ key }}:</span>
+              <span class="value">{{ entry.data[key] }}</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="dataHistory.length === 0" class="no-data">
+          No data history yet...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
