@@ -26,6 +26,10 @@ import { ChildRoutesComponent } from './routing-demo/part2/child-routes/child-ro
 import { RedirectsWildcardsComponent } from './routing-demo/part2/redirects-wildcards/redirects-wildcards.component';
 import { PathMatchingComponent } from './routing-demo/part2/path-matching/path-matching.component';
 import { RouterModuleComponent } from './routing-demo/part2/router-module/router-module.component';
+import { TemplateDrivenFormsComponent } from './forms-demo/template-driven-forms/template-driven-forms.component';
+import { FormValidationDemoComponent } from './forms-demo/form-validation-demo/form-validation-demo.component';
+import { FormGroupingDemoComponent } from './forms-demo/form-grouping-demo/form-grouping-demo.component';
+import { FormControlsDemoComponent } from './forms-demo/form-controls-demo/form-controls-demo.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/html-ts-communication', pathMatch: 'full' },
@@ -42,6 +46,10 @@ export const routes: Routes = [
   { path: 'parent-child-communication-demo', component: ParentChildCommunicationDemoComponent },
   { path: 'observables-signals-demo', component: ObservablesSignalsDemoComponent },
   { path: 'services-dependency-injection-demo', component: ServicesDependencyInjectionDemoComponent },
+  { path: 'template-driven-forms', component: TemplateDrivenFormsComponent },
+  { path: 'form-validation-demo', component: FormValidationDemoComponent },
+  { path: 'form-grouping-demo', component: FormGroupingDemoComponent },
+  { path: 'form-controls-demo', component: FormControlsDemoComponent },
   {
     path: 'routing-demo',
     component: RoutingDemoComponent,

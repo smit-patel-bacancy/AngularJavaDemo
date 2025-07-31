@@ -1,0 +1,430 @@
+<div class="form-grouping-demo">
+  <div class="container">
+    <h1>Form Grouping Demo</h1>
+
+    <div class="grouping-info">
+      <h2>Form Grouping with ngModelGroup</h2>
+      <p>This demo showcases how to organize form controls into logical groups using ngModelGroup:</p>
+      <ul>
+        <li>Organizing related fields into groups</li>
+        <li>Nested form structures</li>
+        <li>Group-level validation</li>
+        <li>Managing complex form data</li>
+        <li>Group-specific operations</li>
+      </ul>
+    </div>
+
+    <div class="form-container">
+      <h3>Employee Registration Form</h3>
+
+      <form #groupedForm="ngForm" (ngSubmit)="onSubmit()" class="grouped-form">
+
+        <!-- Personal Information Group -->
+        <div class="form-group-section">
+          <h4>Personal Information</h4>
+          <div ngModelGroup="personalInfo" class="form-group-content">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  [(ngModel)]="user.personalInfo.firstName"
+                  required
+                  minlength="2"
+                  class="form-control"
+                  [class.is-invalid]="hasError('firstName')"
+                  [class.is-valid]="isValid('firstName')"
+                  placeholder="Enter first name"
+                >
+                <div class="invalid-feedback" *ngIf="hasError('firstName')">
+                  {{ getErrorMessage('firstName') }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  [(ngModel)]="user.personalInfo.lastName"
+                  required
+                  minlength="2"
+                  class="form-control"
+                  [class.is-invalid]="hasError('lastName')"
+                  [class.is-valid]="isValid('lastName')"
+                  placeholder="Enter last name"
+                >
+                <div class="invalid-feedback" *ngIf="hasError('lastName')">
+                  {{ getErrorMessage('lastName') }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  [(ngModel)]="user.personalInfo.email"
+                  required
+                  email
+                  class="form-control"
+                  [class.is-invalid]="hasError('email')"
+                  [class.is-valid]="isValid('email')"
+                  placeholder="Enter email address"
+                >
+                <div class="invalid-feedback" *ngIf="hasError('email')">
+                  {{ getErrorMessage('email') }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  [(ngModel)]="user.personalInfo.phone"
+                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                  class="form-control"
+                  [class.is-invalid]="hasError('phone')"
+                  [class.is-valid]="isValid('phone')"
+                  placeholder="123-456-7890"
+                >
+                <div class="invalid-feedback" *ngIf="hasError('phone')">
+                  {{ getErrorMessage('phone') }}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="dateOfBirth">Date of Birth</label>
+              <input
+                type="date"
+                id="dateOfBirth"
+                name="dateOfBirth"
+                [(ngModel)]="user.personalInfo.dateOfBirth"
+                class="form-control"
+                [class.is-invalid]="hasError('dateOfBirth')"
+                [class.is-valid]="isValid('dateOfBirth')"
+              >
+              <div class="invalid-feedback" *ngIf="hasError('dateOfBirth')">
+                {{ getErrorMessage('dateOfBirth') }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address Information Group -->
+        <div class="form-group-section">
+          <h4>Address Information</h4>
+          <div ngModelGroup="address" class="form-group-content">
+            <div class="form-group">
+              <label for="street">Street Address</label>
+              <input
+                type="text"
+                id="street"
+                name="street"
+                [(ngModel)]="user.address.street"
+                class="form-control"
+                placeholder="Enter street address"
+              >
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City</label>
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  [(ngModel)]="user.address.city"
+                  class="form-control"
+                  placeholder="Enter city"
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="state">State</label>
+                <select
+                  id="state"
+                  name="state"
+                  [(ngModel)]="user.address.state"
+                  class="form-control"
+                >
+                  <option value="">Select State</option>
+                  <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="zipCode">Zip Code</label>
+                <input
+                  type="text"
+                  id="zipCode"
+                  name="zipCode"
+                  [(ngModel)]="user.address.zipCode"
+                  pattern="[0-9]{5}"
+                  maxlength="5"
+                  class="form-control"
+                  [class.is-invalid]="hasError('zipCode')"
+                  [class.is-valid]="isValid('zipCode')"
+                  placeholder="12345"
+                >
+                <div class="invalid-feedback" *ngIf="hasError('zipCode')">
+                  {{ getErrorMessage('zipCode') }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="country">Country</label>
+                <select
+                  id="country"
+                  name="country"
+                  [(ngModel)]="user.address.country"
+                  class="form-control"
+                >
+                  <option value="">Select Country</option>
+                  <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Employment Information Group -->
+        <div class="form-group-section">
+          <h4>Employment Information</h4>
+          <div ngModelGroup="employment" class="form-group-content">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="company">Company</label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  [(ngModel)]="user.employment.company"
+                  class="form-control"
+                  placeholder="Enter company name"
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="position">Position</label>
+                <input
+                  type="text"
+                  id="position"
+                  name="position"
+                  [(ngModel)]="user.employment.position"
+                  class="form-control"
+                  placeholder="Enter job title"
+                >
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="department">Department</label>
+                <select
+                  id="department"
+                  name="department"
+                  [(ngModel)]="user.employment.department"
+                  class="form-control"
+                >
+                  <option value="">Select Department</option>
+                  <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="startDate">Start Date</label>
+                <input
+                  type="date"
+                  id="startDate"
+                  name="startDate"
+                  [(ngModel)]="user.employment.startDate"
+                  class="form-control"
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="salary">Salary</label>
+              <input
+                type="number"
+                id="salary"
+                name="salary"
+                [(ngModel)]="user.employment.salary"
+                min="0"
+                class="form-control"
+                placeholder="Enter annual salary"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Preferences Group -->
+        <div class="form-group-section">
+          <h4>Preferences</h4>
+          <div ngModelGroup="preferences" class="form-group-content">
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="newsletter"
+                  name="newsletter"
+                  [(ngModel)]="user.preferences.newsletter"
+                >
+                <label for="newsletter">Subscribe to newsletter</label>
+              </div>
+
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="notifications"
+                  name="notifications"
+                  [(ngModel)]="user.preferences.notifications"
+                >
+                <label for="notifications">Receive notifications</label>
+              </div>
+
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="marketing"
+                  name="marketing"
+                  [(ngModel)]="user.preferences.marketing"
+                >
+                <label for="marketing">Allow marketing communications</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="language">Preferred Language</label>
+              <select
+                id="language"
+                name="language"
+                [(ngModel)]="user.preferences.language"
+                class="form-control"
+              >
+                <option *ngFor="let lang of languages" [value]="lang.code">{{ lang.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" [disabled]="groupedForm.invalid">
+            Submit Form
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="resetForm()">
+            Reset All
+          </button>
+          <button type="button" class="btn btn-info" (click)="showFormStructure()">
+            Show Structure
+          </button>
+          <button type="button" class="btn btn-success" (click)="exportFormData()">
+            Export Data
+          </button>
+        </div>
+
+        <!-- Group-specific Actions -->
+        <div class="group-actions">
+          <h4>Group Operations</h4>
+          <div class="action-buttons">
+            <div class="action-group">
+              <h5>Personal Info</h5>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="setPersonalInfoDefaults()">
+                Set Defaults
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="resetPersonalInfo()">
+                Reset
+              </button>
+            </div>
+
+            <div class="action-group">
+              <h5>Address</h5>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="setAddressDefaults()">
+                Set Defaults
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="resetAddress()">
+                Reset
+              </button>
+            </div>
+
+            <div class="action-group">
+              <h5>Employment</h5>
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="setEmploymentDefaults()">
+                Set Defaults
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="resetEmployment()">
+                Reset
+              </button>
+            </div>
+
+            <div class="action-group">
+              <h5>Preferences</h5>
+              <button type="button" class="btn btn-sm btn-outline-secondary" (click)="resetPreferences()">
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Form State Display -->
+    <div class="form-state">
+      <h4>Form State Information</h4>
+      <div class="state-grid">
+        <div class="state-item">
+          <strong>Valid:</strong> {{ groupedForm.valid }}
+        </div>
+        <div class="state-item">
+          <strong>Invalid:</strong> {{ groupedForm.invalid }}
+        </div>
+        <div class="state-item">
+          <strong>Pristine:</strong> {{ groupedForm.pristine }}
+        </div>
+        <div class="state-item">
+          <strong>Dirty:</strong> {{ groupedForm.dirty }}
+        </div>
+        <div class="state-item">
+          <strong>Touched:</strong> {{ groupedForm.touched }}
+        </div>
+        <div class="state-item">
+          <strong>Submitted:</strong> {{ groupedForm.submitted }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Group Validation Status -->
+    <div class="group-validation">
+      <h4>Group Validation Status</h4>
+      <div class="group-status-grid">
+        <div class="group-status" *ngFor="let groupName of ['personalInfo', 'address', 'employment', 'preferences']">
+          <h5>{{ groupName | titlecase }}</h5>
+          <div class="status-indicators">
+            <span class="status valid" [class.active]="getGroupValidationStatus(groupName).valid">Valid</span>
+            <span class="status invalid" [class.active]="getGroupValidationStatus(groupName).invalid">Invalid</span>
+            <span class="status touched" [class.active]="getGroupValidationStatus(groupName).touched">Touched</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Data Display -->
+    <div class="form-data">
+      <h4>Current Form Data</h4>
+      <pre>{{ user | json }}</pre>
+    </div>
+  </div>
+</div>
