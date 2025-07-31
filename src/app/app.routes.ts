@@ -11,6 +11,7 @@ import { ContentChildDemoComponent } from './content-child-demo/content-child-de
 import { TemplateDemoComponent } from './template-demo/template-demo.component';
 import { ParentChildCommunicationDemoComponent } from './parent-child-communication-demo/parent-child-communication-demo.component';
 import { ObservablesSignalsDemoComponent } from './observables-signals-demo/observables-signals-demo.component';
+import { ServicesDependencyInjectionDemoComponent } from './services-dependency-injection-demo/services-dependency-injection-demo.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/html-ts-communication', pathMatch: 'full' },
@@ -25,5 +26,6 @@ export const routes: Routes = [
   { path: 'content-child-demo', component: ContentChildDemoComponent },
   { path: 'template-demo', component: TemplateDemoComponent },
   { path: 'parent-child-communication-demo', component: ParentChildCommunicationDemoComponent },
-  { path: 'observables-signals-demo', component: ObservablesSignalsDemoComponent }
+  { path: 'observables-signals-demo', component: ObservablesSignalsDemoComponent },
+  { path: 'services-dependency-injection-demo', component: ServicesDependencyInjectionDemoComponent }
 ];
