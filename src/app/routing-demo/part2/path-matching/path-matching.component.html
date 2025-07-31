@@ -1,0 +1,424 @@
+<div class="path-matching-container">
+  <div class="section">
+    <h2>Path Matching Strategies</h2>
+    <p class="intro">
+      Learn about different path matching strategies in Angular routing, including exact matches, prefix matches, parameter matching, and advanced path matching patterns for complex routing scenarios.
+    </p>
+  </div>
+
+  <div class="matching-strategies-section">
+    <h3>Path Matching Strategies</h3>
+    <div class="strategies-grid">
+      <div class="strategy-card">
+        <h4>Full Path Match</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'admin', component: AdminComponent, pathMatch: 'full' &#125;,
+  &#123; path: 'admin/users', component: UsersComponent, pathMatch: 'full' &#125;,
+  &#123; path: 'admin/settings', component: SettingsComponent, pathMatch: 'full' &#125;
+];
+
+// Examples:
+// /admin → AdminComponent
+// /admin/users → UsersComponent
+// /admin/settings → SettingsComponent
+// /admin/dashboard → No match (404)</code></pre>
+        </div>
+        <p>Full path match requires exact URL match for route activation.</p>
+      </div>
+
+      <div class="strategy-card">
+        <h4>Prefix Path Match</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'admin', component: AdminComponent, pathMatch: 'prefix' &#125;,
+  &#123; path: 'admin/users', component: UsersComponent, pathMatch: 'prefix' &#125;,
+  &#123; path: 'admin/settings', component: SettingsComponent, pathMatch: 'prefix' &#125;
+];
+
+// Examples:
+// /admin → AdminComponent
+// /admin/users → UsersComponent
+// /admin/settings → SettingsComponent
+// /admin/dashboard → AdminComponent (prefix match)</code></pre>
+        </div>
+        <p>Prefix path match activates routes that start with the specified path.</p>
+      </div>
+
+      <div class="strategy-card">
+        <h4>Default Path Match</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'admin', component: AdminComponent &#125;,
+  &#123; path: 'admin/users', component: UsersComponent &#125;,
+  &#123; path: 'admin/settings', component: SettingsComponent &#125;
+];
+
+// Default behavior is 'prefix' for non-redirect routes
+// Examples:
+// /admin → AdminComponent
+// /admin/users → UsersComponent
+// /admin/settings → SettingsComponent</code></pre>
+        </div>
+        <p>Default path matching behavior for non-redirect routes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="route-precedence-section">
+    <h3>Route Precedence & Order</h3>
+    <div class="precedence-grid">
+      <div class="precedence-card">
+        <h4>Route Order Matters</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  // More specific routes first
+  &#123; path: 'admin/users/:id', component: UserDetailComponent &#125;,
+  &#123; path: 'admin/users/new', component: UserFormComponent &#125;,
+  &#123; path: 'admin/users', component: UsersComponent &#125;,
+
+  // Less specific routes last
+  &#123; path: 'admin', component: AdminComponent &#125;,
+  &#123; path: '**', component: NotFoundComponent &#125;
+];
+
+// Route matching order:
+// 1. /admin/users/123 → UserDetailComponent
+// 2. /admin/users/new → UserFormComponent
+// 3. /admin/users → UsersComponent
+// 4. /admin → AdminComponent</code></pre>
+        </div>
+        <p>Routes are matched in the order they are defined - more specific routes should come first.</p>
+      </div>
+
+      <div class="precedence-card">
+        <h4>Parameter vs Static Routes</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  // Static routes take precedence over parameter routes
+  &#123; path: 'products/new', component: ProductFormComponent &#125;,
+  &#123; path: 'products/edit', component: ProductEditComponent &#125;,
+  &#123; path: 'products/:id', component: ProductDetailComponent &#125;,
+
+  // Wildcard routes should be last
+  &#123; path: '**', component: NotFoundComponent &#125;
+];
+
+// Examples:
+// /products/new → ProductFormComponent
+// /products/edit → ProductEditComponent
+// /products/123 → ProductDetailComponent</code></pre>
+        </div>
+        <p>Static routes have higher precedence than parameterized routes.</p>
+      </div>
+
+      <div class="precedence-card">
+        <h4>Child Route Precedence</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123;
+    path: 'admin',
+    component: AdminComponent,
+    children: [
+      &#123; path: '', redirectTo: 'dashboard', pathMatch: 'full' &#125;,
+      &#123; path: 'dashboard', component: DashboardComponent &#125;,
+      &#123; path: 'users/:id', component: UserDetailComponent &#125;,
+      &#123; path: 'users', component: UsersComponent &#125;
+    ]
+  &#125;
+];
+
+// Child route matching:
+// /admin → /admin/dashboard (redirect)
+// /admin/dashboard → DashboardComponent
+// /admin/users/123 → UserDetailComponent
+// /admin/users → UsersComponent</code></pre>
+        </div>
+        <p>Child routes follow the same precedence rules as parent routes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="parameter-matching-section">
+    <h3>Parameter Matching</h3>
+    <div class="parameter-grid">
+      <div class="parameter-card">
+        <h4>Required Parameters</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'user/:id', component: UserComponent &#125;,
+  &#123; path: 'product/:category/:id', component: ProductComponent &#125;,
+  &#123; path: 'post/:year/:month/:slug', component: PostComponent &#125;
+];
+
+// Examples:
+// /user/123 → UserComponent (id: '123')
+// /product/electronics/456 → ProductComponent (category: 'electronics', id: '456')
+// /post/2024/01/my-post → PostComponent (year: '2024', month: '01', slug: 'my-post')</code></pre>
+        </div>
+        <p>Required parameters must be present for the route to match.</p>
+      </div>
+
+      <div class="parameter-card">
+        <h4>Optional Parameters</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'search', component: SearchComponent &#125;,
+  &#123; path: 'search/:query', component: SearchComponent &#125;,
+  &#123; path: 'search/:query/:category', component: SearchComponent &#125;
+];
+
+// Examples:
+// /search → SearchComponent (no parameters)
+// /search/angular → SearchComponent (query: 'angular')
+// /search/angular/tutorials → SearchComponent (query: 'angular', category: 'tutorials')</code></pre>
+        </div>
+        <p>Optional parameters allow flexible route matching.</p>
+      </div>
+
+      <div class="parameter-card">
+        <h4>Parameter Validation</h4>
+        <div class="code-example">
+          <pre><code>export class ParameterGuard implements CanActivate &#123;
+  canActivate(route: ActivatedRouteSnapshot): boolean &#123;
+    const id = route.paramMap.get('id');
+    const category = route.paramMap.get('category');
+
+    // Validate parameter format
+    if (id && !/^\d+$/.test(id)) &#123;
+      this.router.navigate(['/error']);
+      return false;
+    &#125;
+
+    // Validate category
+    if (category && !['electronics', 'clothing', 'books'].includes(category)) &#123;
+      this.router.navigate(['/error']);
+      return false;
+    &#125;
+
+    return true;
+  &#125;
+&#125;
+
+export const routes: Routes = [
+  &#123; path: 'product/:category/:id', component: ProductComponent, canActivate: [ParameterGuard] &#125;
+];</code></pre>
+        </div>
+        <p>Use guards to validate parameter format and values.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="advanced-matching-section">
+    <h3>Advanced Path Matching</h3>
+    <div class="advanced-grid">
+      <div class="advanced-card">
+        <h4>Regex-like Matching</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  // Match specific patterns
+  &#123; path: 'user/:id(\\d+)', component: UserComponent &#125;,
+  &#123; path: 'post/:year(\\d&#123;4&#125;)/:month(\\d&#123;2&#125;)/:slug', component: PostComponent &#125;,
+  &#123; path: 'product/:category([a-z]+)/:id(\\d+)', component: ProductComponent &#125;
+];
+
+// Examples:
+// /user/123 → UserComponent (valid)
+// /user/abc → No match (invalid)
+// /post/2024/01/my-post → PostComponent (valid)
+// /post/24/1/my-post → No match (invalid)</code></pre>
+        </div>
+        <p>Use regex patterns to validate parameter format during route matching.</p>
+      </div>
+
+      <div class="advanced-card">
+        <h4>Multiple Path Patterns</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  // Multiple paths for same component
+  &#123; path: 'home', component: HomeComponent &#125;,
+  &#123; path: 'dashboard', component: HomeComponent &#125;,
+  &#123; path: 'main', component: HomeComponent &#125;,
+
+  // Alternative: use redirects
+  &#123; path: 'dashboard', redirectTo: '/home', pathMatch: 'full' &#125;,
+  &#123; path: 'main', redirectTo: '/home', pathMatch: 'full' &#125;,
+  &#123; path: 'home', component: HomeComponent &#125;
+];
+
+// Both approaches achieve the same result</code></pre>
+        </div>
+        <p>Use multiple route definitions or redirects for multiple paths to same component.</p>
+      </div>
+
+      <div class="advanced-card">
+        <h4>Dynamic Route Matching</h4>
+        <div class="code-example">
+          <pre><code>export class DynamicRouteService &#123;
+  constructor(private router: Router) &#123;&#125;
+
+  addDynamicRoute(path: string, component: any) &#123;
+    const newRoute = &#123; path, component &#125;;
+    this.router.config.push(newRoute);
+  &#125;
+
+  removeDynamicRoute(path: string) &#123;
+    this.router.config = this.router.config.filter(route => route.path !== path);
+  &#125;
+&#125;
+
+// Usage
+this.dynamicRouteService.addDynamicRoute('dynamic-page', DynamicComponent);
+this.router.navigate(['/dynamic-page']);</code></pre>
+        </div>
+        <p>Dynamically add and remove routes based on application state.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="real-world-examples-section">
+    <h3>Real-World Examples</h3>
+    <div class="examples-grid">
+      <div class="example-card">
+        <h4>🛒 E-commerce Product Routes</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'products', component: ProductsComponent &#125;,
+  &#123; path: 'products/new', component: ProductFormComponent &#125;,
+  &#123; path: 'products/:category', component: ProductCategoryComponent &#125;,
+  &#123; path: 'products/:category/:id', component: ProductDetailComponent &#125;,
+  &#123; path: 'products/:category/:id/edit', component: ProductEditComponent &#125;,
+  &#123; path: '**', component: NotFoundComponent &#125;
+];
+
+// Examples:
+// /products → ProductsComponent
+// /products/new → ProductFormComponent
+// /products/electronics → ProductCategoryComponent
+// /products/electronics/123 → ProductDetailComponent
+// /products/electronics/123/edit → ProductEditComponent</code></pre>
+        </div>
+        <p>E-commerce site with hierarchical product routing.</p>
+      </div>
+
+      <div class="example-card">
+        <h4>📊 Admin Dashboard Routes</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'admin', component: AdminComponent, children: [
+    &#123; path: '', redirectTo: 'dashboard', pathMatch: 'full' &#125;,
+    &#123; path: 'dashboard', component: DashboardComponent &#125;,
+    &#123; path: 'users/:id', component: UserDetailComponent &#125;,
+    &#123; path: 'users', component: UsersComponent &#125;,
+    &#123; path: 'settings', component: SettingsComponent &#125;
+  ] &#125;,
+  &#123; path: '**', component: NotFoundComponent &#125;
+];
+
+// Examples:
+// /admin → /admin/dashboard (redirect)
+// /admin/dashboard → DashboardComponent
+// /admin/users/123 → UserDetailComponent
+// /admin/users → UsersComponent
+// /admin/settings → SettingsComponent</code></pre>
+        </div>
+        <p>Admin dashboard with nested user management routing.</p>
+      </div>
+
+      <div class="example-card">
+        <h4>📝 Blog Post Routes</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'blog', component: BlogComponent &#125;,
+  &#123; path: 'blog/:year(\\d&#123;4&#125;)/:month(\\d&#123;2&#125;)/:slug', component: PostComponent &#125;,
+  &#123; path: 'blog/:category', component: CategoryComponent &#125;,
+  &#123; path: 'blog/:category/:slug', component: PostComponent &#125;,
+  &#123; path: '**', component: NotFoundComponent &#125;
+];
+
+// Examples:
+// /blog → BlogComponent
+// /blog/2024/01/my-post → PostComponent
+// /blog/tutorials → CategoryComponent
+// /blog/tutorials/angular-guide → PostComponent</code></pre>
+        </div>
+        <p>Blog with flexible post routing patterns.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices-section">
+    <h3>Best Practices</h3>
+    <div class="practices-list">
+      <div class="practice-item">
+        <h4>✅ Order Routes by Specificity</h4>
+        <p>Place more specific routes before less specific ones to ensure proper matching.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Use Parameter Validation</h4>
+        <p>Validate route parameters using guards to prevent invalid route access.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Choose Appropriate Path Matching</h4>
+        <p>Use 'full' for exact matches and 'prefix' for hierarchical routing.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Handle Edge Cases</h4>
+        <p>Always include a wildcard route (**) to handle unmatched URLs.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Test Route Matching</h4>
+        <p>Test all route combinations to ensure proper matching behavior.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="common-patterns-section">
+    <h3>Common Path Matching Patterns</h3>
+    <div class="patterns-grid">
+      <div class="pattern-card">
+        <h4>Hierarchical Pattern</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'admin', component: AdminComponent, children: [
+    &#123; path: 'users/:id', component: UserDetailComponent &#125;,
+    &#123; path: 'users', component: UsersComponent &#125;
+  ] &#125;
+];</code></pre>
+        </div>
+        <p>Use child routes for hierarchical navigation structures.</p>
+      </div>
+
+      <div class="pattern-card">
+        <h4>CRUD Pattern</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'items', component: ItemsComponent &#125;,
+  &#123; path: 'items/new', component: ItemFormComponent &#125;,
+  &#123; path: 'items/:id', component: ItemDetailComponent &#125;,
+  &#123; path: 'items/:id/edit', component: ItemEditComponent &#125;
+];</code></pre>
+        </div>
+        <p>Standard CRUD routing pattern for resource management.</p>
+      </div>
+
+      <div class="pattern-card">
+        <h4>Feature Pattern</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'feature', component: FeatureComponent, children: [
+    &#123; path: '', component: FeatureOverviewComponent &#125;,
+    &#123; path: 'settings', component: FeatureSettingsComponent &#125;,
+    &#123; path: 'help', component: FeatureHelpComponent &#125;
+  ] &#125;
+];</code></pre>
+        </div>
+        <p>Feature-based routing with overview, settings, and help pages.</p>
+      </div>
+    </div>
+  </div>
+</div>

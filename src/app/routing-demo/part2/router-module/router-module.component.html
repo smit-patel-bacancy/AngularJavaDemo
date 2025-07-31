@@ -1,0 +1,419 @@
+<div class="router-module-container">
+  <div class="section">
+    <h2>Router Module Configuration</h2>
+    <p class="intro">
+      Learn how to configure the Angular Router module, including lazy loading, feature modules, and advanced router configuration patterns for scalable applications.
+    </p>
+  </div>
+
+  <div class="basic-setup-section">
+    <h3>Basic Router Module Setup</h3>
+    <div class="setup-grid">
+      <div class="setup-card">
+        <h4>App Module Configuration</h4>
+        <div class="code-example">
+          <pre><code>import &#123; NgModule &#125; from '&#64;angular/core';
+import &#123; RouterModule, Routes &#125; from '&#64;angular/router';
+
+const routes: Routes = [
+  &#123; path: 'home', component: HomeComponent &#125;,
+  &#123; path: 'about', component: AboutComponent &#125;,
+  &#123; path: 'contact', component: ContactComponent &#125;,
+  &#123; path: '**', component: NotFoundComponent &#125;
+];
+
+&#64;NgModule(&#123;
+  imports: [
+    RouterModule.forRoot(routes, &#123;
+      enableTracing: false,
+      useHash: false,
+      scrollPositionRestoration: 'enabled'
+    &#125;)
+  ],
+  exports: [RouterModule]
+&#125;)
+export class AppRoutingModule &#123; &#125;</code></pre>
+        </div>
+        <p>Configure the main router module with routes and options.</p>
+      </div>
+
+      <div class="setup-card">
+        <h4>Feature Module Configuration</h4>
+        <div class="code-example">
+          <pre><code>// admin.module.ts
+import &#123; NgModule &#125; from '&#64;angular/core';
+import &#123; RouterModule, Routes &#125; from '&#64;angular/router';
+
+const adminRoutes: Routes = [
+  &#123; path: '', component: AdminComponent, children: [
+    &#123; path: 'dashboard', component: DashboardComponent &#125;,
+    &#123; path: 'users', component: UsersComponent &#125;,
+    &#123; path: 'settings', component: SettingsComponent &#125;
+  ] &#125;
+];
+
+&#64;NgModule(&#123;
+  imports: [RouterModule.forChild(adminRoutes)],
+  exports: [RouterModule]
+&#125;)
+export class AdminRoutingModule &#123; &#125;</code></pre>
+        </div>
+        <p>Configure feature module routes using forChild method.</p>
+      </div>
+
+      <div class="setup-card">
+        <h4>Router Options</h4>
+        <div class="code-example">
+          <pre><code>RouterModule.forRoot(routes, &#123;
+  enableTracing: true, // Enable router debugging
+  useHash: true, // Use hash-based routing
+  scrollPositionRestoration: 'enabled', // Restore scroll position
+  anchorScrolling: 'enabled', // Enable anchor scrolling
+  scrollOffset: [0, 0], // Custom scroll offset
+  paramsInheritanceStrategy: 'always' // Parameter inheritance
+&#125;)</code></pre>
+        </div>
+        <p>Configure router behavior with various options for different use cases.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lazy-loading-section">
+    <h3>Lazy Loading Configuration</h3>
+    <div class="lazy-grid">
+      <div class="lazy-card">
+        <h4>Basic Lazy Loading</h4>
+        <div class="code-example">
+          <pre><code>// app.routes.ts
+export const routes: Routes = [
+  &#123; path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) &#125;,
+  &#123; path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) &#125;,
+  &#123; path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) &#125;
+];
+
+// admin.module.ts
+&#64;NgModule(&#123;
+  imports: [RouterModule.forChild(adminRoutes)],
+  declarations: [AdminComponent, DashboardComponent, UsersComponent]
+&#125;)
+export class AdminModule &#123; &#125;</code></pre>
+        </div>
+        <p>Load feature modules on demand for better performance.</p>
+      </div>
+
+      <div class="lazy-card">
+        <h4>Preloading Strategies</h4>
+        <div class="code-example">
+          <pre><code>import &#123; PreloadAllModules &#125; from '&#64;angular/router';
+
+&#64;NgModule(&#123;
+  imports: [
+    RouterModule.forRoot(routes, &#123;
+      preloadingStrategy: PreloadAllModules
+    &#125;)
+  ]
+&#125;)
+export class AppRoutingModule &#123; &#125;
+
+// Custom preloading strategy
+export class CustomPreloadingStrategy implements PreloadingStrategy &#123;
+  preload(route: Route, load: () => Observable&lt;any&gt;): Observable&lt;any&gt; &#123;
+    if (route.data && route.data['preload']) &#123;
+      return load();
+    &#125;
+    return of(null);
+  &#125;
+&#125;</code></pre>
+        </div>
+        <p>Implement custom preloading strategies for optimal loading.</p>
+      </div>
+
+      <div class="lazy-card">
+        <h4>Route Guards with Lazy Loading</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123;
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AuthGuard],
+    data: &#123; requiresAuth: true &#125;
+  &#125;
+];
+
+// In AuthGuard
+canActivate(route: ActivatedRouteSnapshot): boolean &#123;
+  if (route.data['requiresAuth'] && !this.authService.isAuthenticated()) &#123;
+    this.router.navigate(['/login']);
+    return false;
+  &#125;
+  return true;
+&#125;</code></pre>
+        </div>
+        <p>Apply guards to lazy-loaded routes for security.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="router-events-section">
+    <h3>Router Events & Monitoring</h3>
+    <div class="events-grid">
+      <div class="event-card">
+        <h4>Router Event Subscription</h4>
+        <div class="code-example">
+          <pre><code>import &#123; Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError &#125; from '&#64;angular/router';
+
+export class AppComponent &#123;
+  loading = false;
+
+  constructor(private router: Router) &#123;
+    this.router.events.subscribe(event => &#123;
+      if (event instanceof NavigationStart) &#123;
+        this.loading = true;
+      &#125;
+      if (event instanceof NavigationEnd ||
+          event instanceof NavigationCancel ||
+          event instanceof NavigationError) &#123;
+        this.loading = false;
+      &#125;
+    &#125;);
+  &#125;
+&#125;</code></pre>
+        </div>
+        <p>Monitor router events for loading states and analytics.</p>
+      </div>
+
+      <div class="event-card">
+        <h4>Route Change Analytics</h4>
+        <div class="code-example">
+          <pre><code>export class RouteAnalyticsService &#123;
+  constructor(private router: Router, private analytics: AnalyticsService) &#123;
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => &#123;
+        this.analytics.trackPageView(event.urlAfterRedirects);
+      &#125;);
+  &#125;
+&#125;</code></pre>
+        </div>
+        <p>Track route changes for analytics and user behavior analysis.</p>
+      </div>
+
+      <div class="event-card">
+        <h4>Route Error Handling</h4>
+        <div class="code-example">
+          <pre><code>export class RouteErrorHandler &#123;
+  constructor(private router: Router, private errorService: ErrorService) &#123;
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationError))
+      .subscribe((event: NavigationError) => &#123;
+        this.errorService.logError('Navigation Error', event.error);
+        this.router.navigate(['/error']);
+      &#125;);
+  &#125;
+&#125;</code></pre>
+        </div>
+        <p>Handle navigation errors gracefully with proper error logging.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="performance-section">
+    <h3>Performance Optimization</h3>
+    <div class="performance-grid">
+      <div class="performance-card">
+        <h4>Route Caching</h4>
+        <div class="code-example">
+          <pre><code>export class RouteCacheService &#123;
+  private cache = new Map&lt;string, any&gt;();
+
+  getRouteData(route: string): any &#123;
+    if (this.cache.has(route)) &#123;
+      return this.cache.get(route);
+    &#125;
+
+    const data = this.loadRouteData(route);
+    this.cache.set(route, data);
+    return data;
+  &#125;
+
+  clearCache(): void &#123;
+    this.cache.clear();
+  &#125;
+&#125;</code></pre>
+        </div>
+        <p>Implement route data caching for better performance.</p>
+      </div>
+
+      <div class="performance-card">
+        <h4>Route Preloading</h4>
+        <div class="code-example">
+          <pre><code>export class SelectivePreloadingStrategy implements PreloadingStrategy &#123;
+  preload(route: Route, load: () => Observable&lt;any&gt;): Observable&lt;any&gt; &#123;
+    if (route.data && route.data['preload'] === true) &#123;
+      return load();
+    &#125;
+    return of(null);
+  &#125;
+&#125;
+
+// In route configuration
+&#123;
+  path: 'admin',
+  loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+  data: &#123; preload: true &#125;
+&#125;</code></pre>
+        </div>
+        <p>Selectively preload routes based on application needs.</p>
+      </div>
+
+      <div class="performance-card">
+        <h4>Route Optimization</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  // Optimize route order - most specific first
+  &#123; path: 'admin/users/:id', component: UserDetailComponent &#125;,
+  &#123; path: 'admin/users', component: UsersComponent &#125;,
+  &#123; path: 'admin', component: AdminComponent &#125;,
+
+  // Use wildcards efficiently
+  &#123; path: '**', component: NotFoundComponent &#125;
+];</code></pre>
+        </div>
+        <p>Optimize route configuration for better matching performance.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="real-world-examples-section">
+    <h3>Real-World Examples</h3>
+    <div class="examples-grid">
+      <div class="example-card">
+        <h4>🛒 E-commerce Platform</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: '', redirectTo: '/home', pathMatch: 'full' &#125;,
+  &#123; path: 'home', component: HomeComponent &#125;,
+  &#123; path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) &#125;,
+  &#123; path: 'cart', component: CartComponent, canActivate: [AuthGuard] &#125;,
+  &#123; path: 'checkout', loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule) &#125;,
+  &#123; path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canActivate: [AdminGuard] &#125;,
+  &#123; path: '**', component: NotFoundComponent &#125;
+];</code></pre>
+        </div>
+        <p>E-commerce platform with lazy-loaded feature modules and guards.</p>
+      </div>
+
+      <div class="example-card">
+        <h4>📊 Enterprise Dashboard</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: '', redirectTo: '/dashboard', pathMatch: 'full' &#125;,
+  &#123; path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] &#125;,
+  &#123; path: 'analytics', loadChildren: () => import('./analytics/analytics.module').then(m => m.AnalyticsModule) &#125;,
+  &#123; path: 'reports', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) &#125;,
+  &#123; path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canActivate: [AdminGuard] &#125;,
+  &#123; path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] &#125;,
+  &#123; path: '**', component: NotFoundComponent &#125;
+];</code></pre>
+        </div>
+        <p>Enterprise dashboard with multiple lazy-loaded modules and role-based access.</p>
+      </div>
+
+      <div class="example-card">
+        <h4>📝 Content Management System</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: '', redirectTo: '/content', pathMatch: 'full' &#125;,
+  &#123; path: 'content', loadChildren: () => import('./content/content.module').then(m => m.ContentModule) &#125;,
+  &#123; path: 'media', loadChildren: () => import('./media/media.module').then(m => m.MediaModule) &#125;,
+  &#123; path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canActivate: [AdminGuard] &#125;,
+  &#123; path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] &#125;,
+  &#123; path: '**', component: NotFoundComponent &#125;
+];</code></pre>
+        </div>
+        <p>CMS with modular architecture and lazy-loaded content management features.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices-section">
+    <h3>Best Practices</h3>
+    <div class="practices-list">
+      <div class="practice-item">
+        <h4>✅ Use Lazy Loading</h4>
+        <p>Implement lazy loading for feature modules to improve initial load time.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Configure Router Options</h4>
+        <p>Set appropriate router options for your application's needs.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Monitor Router Events</h4>
+        <p>Subscribe to router events for analytics and error handling.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Implement Preloading</h4>
+        <p>Use preloading strategies to balance performance and user experience.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Handle Route Errors</h4>
+        <p>Implement proper error handling for navigation failures.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="common-patterns-section">
+    <h3>Common Router Module Patterns</h3>
+    <div class="patterns-grid">
+      <div class="pattern-card">
+        <h4>Feature Module Pattern</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123; path: 'feature', loadChildren: () => import('./feature/feature.module').then(m => m.FeatureModule) &#125;
+];
+
+// feature.module.ts
+&#64;NgModule(&#123;
+  imports: [RouterModule.forChild(featureRoutes)],
+  declarations: [FeatureComponent]
+&#125;)
+export class FeatureModule &#123; &#125;</code></pre>
+        </div>
+        <p>Organize routes into feature modules for better maintainability.</p>
+      </div>
+
+      <div class="pattern-card">
+        <h4>Guarded Route Pattern</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123;
+    path: 'protected',
+    loadChildren: () => import('./protected/protected.module').then(m => m.ProtectedModule),
+    canActivate: [AuthGuard],
+    canLoad: [AuthGuard]
+  &#125;
+];</code></pre>
+        </div>
+        <p>Protect lazy-loaded routes with appropriate guards.</p>
+      </div>
+
+      <div class="pattern-card">
+        <h4>Preloaded Route Pattern</h4>
+        <div class="code-example">
+          <pre><code>export const routes: Routes = [
+  &#123;
+    path: 'important',
+    loadChildren: () => import('./important/important.module').then(m => m.ImportantModule),
+    data: &#123; preload: true &#125;
+  &#125;
+];</code></pre>
+        </div>
+        <p>Preload important routes for better user experience.</p>
+      </div>
+    </div>
+  </div>
+</div>

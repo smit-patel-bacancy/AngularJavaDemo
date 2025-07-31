@@ -1,0 +1,472 @@
+<div class="query-params-fragments-container">
+  <div class="section">
+    <h2>Query Parameters & Fragments</h2>
+    <p class="intro">
+      Learn how to work with query parameters and fragments in Angular routing, including setting, reading, and managing URL query parameters for filtering, pagination, and state management.
+    </p>
+  </div>
+
+  <div class="query-params-section">
+    <h3>Query Parameters Basics</h3>
+    <div class="basics-grid">
+      <div class="basic-card">
+        <h4>Setting Query Parameters</h4>
+        <div class="code-example">
+          <pre><code>// Template navigation
+&lt;a [routerLink]="['/products']"
+   [queryParams]="&#123; category: 'electronics', brand: 'apple' &#125;"&gt;
+  Electronics
+&lt;/a&gt;
+
+// Programmatic navigation
+this.router.navigate(['/products'], &#123;
+  queryParams: &#123;
+    category: 'electronics',
+    brand: 'apple',
+    price: '100-500'
+  &#125;
+&#125;);</code></pre>
+        </div>
+        <p>Add query parameters to navigation for filtering and state.</p>
+      </div>
+
+      <div class="basic-card">
+        <h4>Reading Query Parameters</h4>
+        <div class="code-example">
+          <pre><code>import &#123; ActivatedRoute &#125; from '&#64;angular/router';
+
+export class ProductsComponent &#123;
+  constructor(private route: ActivatedRoute) &#123;&#125;
+
+  ngOnInit() &#123;
+    // Snapshot approach
+    const category = this.route.snapshot.queryParamMap.get('category');
+    const brand = this.route.snapshot.queryParamMap.get('brand');
+
+    // Observable approach
+    this.route.queryParamMap.subscribe(params => &#123;
+      const category = params.get('category');
+      const brand = params.get('brand');
+      this.filterProducts(category, brand);
+    &#125;);
+  &#125;
+&#125;</code></pre>
+        </div>
+        <p>Retrieve query parameters using ActivatedRoute service.</p>
+      </div>
+
+      <div class="basic-card">
+        <h4>Preserving Query Parameters</h4>
+        <div class="code-example">
+          <pre><code>// Preserve existing query params
+this.router.navigate(['/products'], &#123;
+  queryParams: &#123; category: 'electronics' &#125;,
+  queryParamsHandling: 'preserve'
+&#125;);
+
+// Merge with existing query params
+this.router.navigate(['/products'], &#123;
+  queryParams: &#123; brand: 'apple' &#125;,
+  queryParamsHandling: 'merge'
+&#125;);</code></pre>
+        </div>
+        <p>Maintain existing query parameters during navigation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fragments-section">
+    <h3>URL Fragments (Hash)</h3>
+    <div class="fragments-grid">
+      <div class="fragment-card">
+        <h4>Setting Fragments</h4>
+        <div class="code-example">
+          <pre><code>// Template navigation
+&lt;a [routerLink]="['/documentation']"
+   [fragment]="'getting-started'"&gt;
+  Getting Started
+&lt;/a&gt;
+
+// Programmatic navigation
+this.router.navigate(['/documentation'], &#123;
+  fragment: 'api-reference'
+&#125;);</code></pre>
+        </div>
+        <p>Navigate to specific sections using URL fragments.</p>
+      </div>
+
+      <div class="fragment-card">
+        <h4>Reading Fragments</h4>
+        <div class="code-example">
+          <pre><code>ngOnInit() &#123;
+  // Snapshot approach
+  const fragment = this.route.snapshot.fragment;
+
+  // Observable approach
+  this.route.fragment.subscribe(fragment => &#123;
+    if (fragment) &#123;
+      this.scrollToSection(fragment);
+    &#125;
+  &#125;);
+&#125;</code></pre>
+        </div>
+        <p>Handle fragment changes for scroll-to-section functionality.</p>
+      </div>
+
+      <div class="fragment-card">
+        <h4>Fragment with Query Params</h4>
+        <div class="code-example">
+          <pre><code>this.router.navigate(['/documentation'], &#123;
+  queryParams: &#123; version: 'latest' &#125;,
+  fragment: 'installation'
+&#125;);
+
+// Results in: /documentation?version=latest#installation</code></pre>
+        </div>
+        <p>Combine fragments with query parameters for rich navigation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="advanced-patterns-section">
+    <h3>Advanced Query Parameter Patterns</h3>
+    <div class="patterns-grid">
+      <div class="pattern-card">
+        <h4>Reactive Query Parameters</h4>
+        <div class="code-example">
+          <pre><code>ngOnInit() &#123;
+  this.route.queryParamMap
+    .pipe(
+      map(params => &#123;
+        category: params.get('category'),
+        brand: params.get('brand'),
+        price: params.get('price')
+      &#125;),
+      filter(filters => !!filters.category),
+      debounceTime(300),
+      takeUntil(this.destroy$)
+    )
+    .subscribe(filters => &#123;
+      this.applyFilters(filters);
+    &#125;);
+&#125;</code></pre>
+        </div>
+        <p>Handle query parameter changes reactively with debouncing.</p>
+      </div>
+
+      <div class="pattern-card">
+        <h4>Query Parameter Validation</h4>
+        <div class="code-example">
+          <pre><code>ngOnInit() &#123;
+  this.route.queryParamMap
+    .pipe(
+      map(params => this.validateQueryParams(params)),
+      filter(result => result.isValid),
+      map(result => result.data),
+      takeUntil(this.destroy$)
+    )
+    .subscribe(validParams => &#123;
+      this.processValidParams(validParams);
+    &#125;);
+&#125;
+
+private validateQueryParams(params: ParamMap) &#123;
+  const category = params.get('category');
+  const price = params.get('price');
+
+  if (!category || !this.isValidCategory(category)) &#123;
+    return &#123; isValid: false &#125;;
+  &#125;
+
+  return &#123;
+    isValid: true,
+    data: &#123; category, price &#125;
+  &#125;;
+&#125;</code></pre>
+        </div>
+        <p>Validate query parameters before processing.</p>
+      </div>
+
+      <div class="pattern-card">
+        <h4>Query Parameter State Management</h4>
+        <div class="code-example">
+          <pre><code>export class FilterComponent &#123;
+  currentFilters = &#123; category: '', brand: '', price: '' &#125;;
+
+  ngOnInit() &#123;
+    this.route.queryParamMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => &#123;
+        this.currentFilters = &#123;
+          category: params.get('category') || '',
+          brand: params.get('brand') || '',
+          price: params.get('price') || ''
+        &#125;;
+      &#125;);
+  &#125;
+
+  updateFilters(newFilters: any) &#123;
+    this.router.navigate([], &#123;
+      queryParams: newFilters,
+      queryParamsHandling: 'merge'
+    &#125;);
+  &#125;
+&#125;</code></pre>
+        </div>
+        <p>Sync component state with query parameters.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="real-world-examples-section">
+    <h3>Real-World Examples</h3>
+    <div class="examples-grid">
+      <div class="example-card">
+        <h4>🛒 E-commerce Product Filtering</h4>
+        <div class="code-example">
+          <pre><code>export class ProductListComponent &#123;
+  ngOnInit() &#123;
+    this.route.queryParamMap
+      .pipe(
+        map(params => &#123;
+          category: params.get('category'),
+          brand: params.get('brand'),
+          minPrice: Number(params.get('minPrice')),
+          maxPrice: Number(params.get('maxPrice')),
+          sortBy: params.get('sortBy') || 'name'
+        &#125;),
+        filter(filters => !!filters.category),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(filters => &#123;
+        this.loadProducts(filters);
+      &#125;);
+  &#125;
+
+  applyFilter(filterType: string, value: any) &#123;
+    const currentParams = this.route.snapshot.queryParamMap;
+    const newParams = &#123; ...currentParams, [filterType]: value &#125;;
+
+    this.router.navigate([], &#123;
+      queryParams: newParams,
+      queryParamsHandling: 'merge'
+    &#125;);
+  &#125;
+&#125;</code></pre>
+        </div>
+        <p>Implement advanced product filtering with query parameters.</p>
+      </div>
+
+      <div class="example-card">
+        <h4>📊 Data Table with Pagination</h4>
+        <div class="code-example">
+          <pre><code>export class DataTableComponent &#123;
+  ngOnInit() &#123;
+    this.route.queryParamMap
+      .pipe(
+        map(params => &#123;
+          page: Number(params.get('page')) || 1,
+          size: Number(params.get('size')) || 10,
+          sortBy: params.get('sortBy') || 'id',
+          sortOrder: params.get('sortOrder') || 'asc'
+        &#125;),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(pagination => &#123;
+        this.loadData(pagination);
+      &#125;);
+  &#125;
+
+  changePage(page: number) &#123;
+    this.router.navigate([], &#123;
+      queryParams: &#123; page &#125;,
+      queryParamsHandling: 'merge'
+    &#125;);
+  &#125;
+&#125;</code></pre>
+        </div>
+        <p>Handle pagination state with query parameters.</p>
+      </div>
+
+      <div class="example-card">
+        <h4>📝 Documentation with Sections</h4>
+        <div class="code-example">
+          <pre><code>export class DocumentationComponent &#123;
+  ngOnInit() &#123;
+    // Handle query params
+    this.route.queryParamMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => &#123;
+        const version = params.get('version') || 'latest';
+        this.loadDocumentation(version);
+      &#125;);
+
+    // Handle fragments
+    this.route.fragment
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(fragment => &#123;
+        if (fragment) &#123;
+          this.scrollToSection(fragment);
+        &#125;
+      &#125;);
+  &#125;
+
+  scrollToSection(sectionId: string) &#123;
+    const element = document.getElementById(sectionId);
+    if (element) &#123;
+      element.scrollIntoView(&#123; behavior: 'smooth' &#125;);
+    &#125;
+  &#125;
+&#125;</code></pre>
+        </div>
+        <p>Combine query parameters and fragments for documentation navigation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="url-management-section">
+    <h3>URL Management Best Practices</h3>
+    <div class="management-grid">
+      <div class="management-card">
+        <h4>Clean URL Structure</h4>
+        <div class="code-example">
+          <pre><code>// Good URL structure
+/products?category=electronics&brand=apple&price=100-500
+
+// Avoid complex nested structures
+/products/electronics/apple/100-500
+
+// Use fragments for sections
+/documentation?version=latest#installation</code></pre>
+        </div>
+        <p>Keep URLs clean and readable for better UX and SEO.</p>
+      </div>
+
+      <div class="management-card">
+        <h4>Parameter Encoding</h4>
+        <div class="code-example">
+          <pre><code>// Handle special characters
+this.router.navigate(['/search'], &#123;
+  queryParams: &#123;
+    query: encodeURIComponent('angular & typescript'),
+    category: 'programming'
+  &#125;
+&#125;);
+
+// Decode parameters
+ngOnInit() &#123;
+  this.route.queryParamMap.subscribe(params => &#123;
+    const query = decodeURIComponent(params.get('query') || '');
+    this.performSearch(query);
+  &#125;);
+&#125;</code></pre>
+        </div>
+        <p>Properly encode and decode query parameters with special characters.</p>
+      </div>
+
+      <div class="management-card">
+        <h4>Default Values</h4>
+        <div class="code-example">
+          <pre><code>ngOnInit() &#123;
+  this.route.queryParamMap
+    .pipe(
+      map(params => &#123;
+        page: Number(params.get('page')) || 1,
+        size: Number(params.get('size')) || 10,
+        sortBy: params.get('sortBy') || 'name',
+        category: params.get('category') || 'all'
+      &#125;),
+      takeUntil(this.destroy$)
+    )
+    .subscribe(defaults => &#123;
+      this.applyDefaults(defaults);
+    &#125;);
+&#125;</code></pre>
+        </div>
+        <p>Provide sensible defaults for missing query parameters.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices-section">
+    <h3>Best Practices</h3>
+    <div class="practices-list">
+      <div class="practice-item">
+        <h4>✅ Use Query Params for State</h4>
+        <p>Store application state in query parameters for bookmarkable URLs.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Handle Parameter Changes</h4>
+        <p>Subscribe to query parameter changes to react to URL updates.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Validate Parameters</h4>
+        <p>Always validate query parameters before using them in your application.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Use Fragments for Sections</h4>
+        <p>Use URL fragments for navigating to specific page sections.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Preserve User State</h4>
+        <p>Use queryParamsHandling to maintain user's current state during navigation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="common-patterns-section">
+    <h3>Common Query Parameter Patterns</h3>
+    <div class="patterns-grid">
+      <div class="pattern-card">
+        <h4>Filtering Pattern</h4>
+        <div class="code-example">
+          <pre><code>// URL: /products?category=electronics&brand=apple
+this.route.queryParamMap.subscribe(params => &#123;
+  const filters = &#123;
+    category: params.get('category'),
+    brand: params.get('brand')
+  &#125;;
+  this.applyFilters(filters);
+&#125;);</code></pre>
+        </div>
+        <p>Use query parameters for filtering and search functionality.</p>
+      </div>
+
+      <div class="pattern-card">
+        <h4>Pagination Pattern</h4>
+        <div class="code-example">
+          <pre><code>// URL: /users?page=2&size=20&sortBy=name
+this.route.queryParamMap.subscribe(params => &#123;
+  const pagination = &#123;
+    page: Number(params.get('page')) || 1,
+    size: Number(params.get('size')) || 10,
+    sortBy: params.get('sortBy') || 'id'
+  &#125;;
+  this.loadData(pagination);
+&#125;);</code></pre>
+        </div>
+        <p>Handle pagination state with query parameters.</p>
+      </div>
+
+      <div class="pattern-card">
+        <h4>Configuration Pattern</h4>
+        <div class="code-example">
+          <pre><code>// URL: /dashboard?view=analytics&period=month&theme=dark
+this.route.queryParamMap.subscribe(params => &#123;
+  const config = &#123;
+    view: params.get('view') || 'overview',
+    period: params.get('period') || 'week',
+    theme: params.get('theme') || 'light'
+  &#125;;
+  this.configureDashboard(config);
+&#125;);</code></pre>
+        </div>
+        <p>Use query parameters for application configuration.</p>
+      </div>
+    </div>
+  </div>
+</div>

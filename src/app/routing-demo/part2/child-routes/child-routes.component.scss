@@ -1,0 +1,476 @@
+// Child Routes Component Styles
+.child-routes-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+
+  .section {
+    margin-bottom: 3rem;
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 1rem;
+      text-align: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .intro {
+      font-size: 1.1rem;
+      color: #666;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+    }
+  }
+
+  .child-routes-basics-section {
+    margin-bottom: 3rem;
+
+    h3 {
+      font-size: 2rem;
+      color: #34495e;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 2px;
+      }
+    }
+
+    .basics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+
+      .basic-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        h4 {
+          font-size: 1.3rem;
+          color: #2c3e50;
+          margin-bottom: 1rem;
+          font-weight: 600;
+        }
+
+        .code-example {
+          margin: 1rem 0;
+
+          pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            border: 1px solid #4a5568;
+          }
+        }
+
+        .route-structure {
+          margin-top: 1rem;
+          padding: 1rem;
+          background: #f8f9fa;
+          border-radius: 8px;
+          border: 1px solid #e9ecef;
+
+          .route-tree {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #2c3e50;
+            line-height: 1.8;
+
+            .route-item {
+              margin-left: 1rem;
+              position: relative;
+
+              &::before {
+                content: '├─';
+                position: absolute;
+                left: -1rem;
+                color: #667eea;
+              }
+
+              &:last-child::before {
+                content: '└─';
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .nested-routes-section {
+    margin-bottom: 3rem;
+
+    h3 {
+      font-size: 2rem;
+      color: #34495e;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 2px;
+      }
+    }
+
+    .nested-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 2rem;
+
+      .nested-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        h4 {
+          font-size: 1.3rem;
+          color: #2c3e50;
+          margin-bottom: 1rem;
+          font-weight: 600;
+        }
+
+        .code-example {
+          margin: 1rem 0;
+
+          pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            border: 1px solid #4a5568;
+          }
+        }
+
+        .nested-demo {
+          margin-top: 1rem;
+          padding: 1rem;
+          background: #f8f9fa;
+          border-radius: 8px;
+          border: 1px solid #e9ecef;
+
+          .navigation-links {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+
+            a {
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+              text-decoration: none;
+              padding: 0.5rem 1rem;
+              border-radius: 6px;
+              font-size: 0.9rem;
+              font-weight: 600;
+              transition: all 0.3s ease;
+
+              &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+              }
+
+              &.active {
+                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+              }
+            }
+          }
+
+          .child-outlet {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }
+
+  .advanced-child-routes-section {
+    margin-bottom: 3rem;
+
+    h3 {
+      font-size: 2rem;
+      color: #34495e;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 2px;
+      }
+    }
+
+    .advanced-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+
+      .advanced-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        h4 {
+          font-size: 1.3rem;
+          color: #2c3e50;
+          margin-bottom: 1rem;
+          font-weight: 600;
+        }
+
+        .code-example {
+          margin: 1rem 0;
+
+          pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            border: 1px solid #4a5568;
+          }
+        }
+
+        .advanced-demo {
+          margin-top: 1rem;
+          padding: 1rem;
+          background: #f8f9fa;
+          border-radius: 8px;
+          border: 1px solid #e9ecef;
+
+          .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+
+            .btn {
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+              border: none;
+              padding: 0.5rem 1rem;
+              border-radius: 6px;
+              font-size: 0.9rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.3s ease;
+
+              &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+              }
+
+              &.secondary {
+                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+              }
+            }
+          }
+
+          .demo-content {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+            min-height: 100px;
+          }
+        }
+      }
+    }
+  }
+
+  .best-practices-section {
+    margin-bottom: 3rem;
+
+    h3 {
+      font-size: 2rem;
+      color: #34495e;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 2px;
+      }
+    }
+
+    .practices-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+
+      .practice-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        h4 {
+          font-size: 1.2rem;
+          color: #2c3e50;
+          margin-bottom: 1rem;
+          font-weight: 600;
+        }
+
+        .practice-content {
+          color: #666;
+          font-size: 0.95rem;
+          line-height: 1.6;
+
+          ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+
+            li {
+              margin-bottom: 0.5rem;
+            }
+          }
+        }
+
+        .tip {
+          margin-top: 1rem;
+          padding: 1rem;
+          background: #d1ecf1;
+          border: 1px solid #bee5eb;
+          border-radius: 6px;
+          color: #0c5460;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+
+  // Responsive Design
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .section h2 {
+      font-size: 2rem;
+    }
+
+    .basics-grid,
+    .nested-grid,
+    .advanced-grid,
+    .practices-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .basic-card,
+    .nested-card,
+    .advanced-card,
+    .practice-card {
+      padding: 1rem;
+    }
+
+    .navigation-links,
+    .demo-controls {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .section h2 {
+      font-size: 1.8rem;
+    }
+
+    .intro {
+      font-size: 1rem;
+    }
+  }
+}

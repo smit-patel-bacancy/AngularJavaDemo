@@ -19,6 +19,13 @@ import { RouterLinksComponent } from './routing-demo/router-links/router-links.c
 import { NavigationPathsComponent } from './routing-demo/navigation-paths/navigation-paths.component';
 import { StylingLinksComponent } from './routing-demo/styling-links/styling-links.component';
 import { ProgrammaticNavigationComponent } from './routing-demo/programmatic-navigation/programmatic-navigation.component';
+import { PassingParametersComponent } from './routing-demo/part2/passing-parameters/passing-parameters.component';
+import { ReactiveParametersComponent } from './routing-demo/part2/reactive-parameters/reactive-parameters.component';
+import { QueryParamsFragmentsComponent } from './routing-demo/part2/query-params-fragments/query-params-fragments.component';
+import { ChildRoutesComponent } from './routing-demo/part2/child-routes/child-routes.component';
+import { RedirectsWildcardsComponent } from './routing-demo/part2/redirects-wildcards/redirects-wildcards.component';
+import { PathMatchingComponent } from './routing-demo/part2/path-matching/path-matching.component';
+import { RouterModuleComponent } from './routing-demo/part2/router-module/router-module.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/html-ts-communication', pathMatch: 'full' },
@@ -45,7 +52,14 @@ export const routes: Routes = [
       { path: 'router-links', component: RouterLinksComponent },
       { path: 'navigation-paths', component: NavigationPathsComponent },
       { path: 'styling-links', component: StylingLinksComponent },
-      { path: 'programmatic-navigation', component: ProgrammaticNavigationComponent }
+      { path: 'programmatic-navigation', component: ProgrammaticNavigationComponent },
+      { path: 'passing-parameters', component: PassingParametersComponent },
+      { path: 'reactive-parameters', component: ReactiveParametersComponent },
+      { path: 'query-params-fragments', component: QueryParamsFragmentsComponent },
+      { path: 'child-routes', component: ChildRoutesComponent },
+      { path: 'redirects-wildcards', component: RedirectsWildcardsComponent },
+      { path: 'path-matching', component: PathMatchingComponent },
+      { path: 'router-module', component: RouterModuleComponent }
     ]
   }
 ];

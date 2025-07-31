@@ -1,0 +1,350 @@
+<div class="passing-parameters-container">
+  <div class="section">
+    <h2>Passing and Fetching Parameters</h2>
+    <p class="intro">
+      Learn how to pass and retrieve route parameters in Angular, including dynamic parameters, optional parameters, and best practices for parameter handling.
+    </p>
+  </div>
+
+  <div class="basic-parameters-section">
+    <h3>Basic Route Parameters</h3>
+    <div class="parameters-grid">
+      <div class="parameter-card">
+        <h4>Defining Route Parameters</h4>
+        <div class="code-example">
+          <pre><code>// Route configuration
+export const routes: Routes = [
+  {{ '{' }} path: 'user/:id', component: UserComponent {{ '}' }},
+  {{ '{' }} path: 'product/:category/:id', component: ProductComponent {{ '}' }},
+  {{ '{' }} path: 'post/:year/:month/:slug', component: PostComponent {{ '}' }}
+];</code></pre>
+        </div>
+        <p>Define route parameters using colon syntax (:parameterName).</p>
+      </div>
+
+      <div class="parameter-card">
+        <h4>Navigating with Parameters</h4>
+        <div class="code-example">
+          <pre><code>// Template navigation
+&lt;a [routerLink]="['/user', userId]"&gt;User Profile&lt;/a&gt;
+&lt;a [routerLink]="['/product', category, productId]"&gt;Product&lt;/a&gt;
+
+// Programmatic navigation
+this.router.navigate(['/user', userId]);
+this.router.navigate(['/product', category, productId]);</code></pre>
+        </div>
+        <p>Pass parameters when navigating to routes.</p>
+      </div>
+
+      <div class="parameter-card">
+        <h4>Fetching Parameters</h4>
+        <div class="code-example">
+          <pre><code>import {{ '{' }} ActivatedRoute {{ '}' }} from '&#64;angular/router';
+
+constructor(private route: ActivatedRoute) {{ '{' }} {{ '}' }}
+
+ngOnInit() {{ '{' }}
+  // Snapshot approach
+  const userId = this.route.snapshot.paramMap.get('id');
+
+  // Observable approach
+  this.route.paramMap.subscribe(params => {{ '{' }}
+    const userId = params.get('id');
+  {{ '}' }});
+{{ '}' }}</code></pre>
+        </div>
+        <p>Retrieve parameters using ActivatedRoute service.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="parameter-types-section">
+    <h3>Types of Route Parameters</h3>
+    <div class="types-grid">
+      <div class="type-card">
+        <h4>Required Parameters</h4>
+        <div class="code-example">
+          <pre><code>{{ '{' }} path: 'user/:id', component: UserComponent {{ '}' }}
+
+// Must provide the parameter
+this.router.navigate(['/user', 123]);</code></pre>
+        </div>
+        <p>Parameters that must be provided for the route to match.</p>
+      </div>
+
+      <div class="type-card">
+        <h4>Optional Parameters</h4>
+        <div class="code-example">
+          <pre><code>{{ '{' }} path: 'search', component: SearchComponent {{ '}' }}
+
+// Optional parameters
+this.router.navigate(['/search'], {{ '{' }}
+  queryParams: {{ '{' }} query: 'angular', page: 1 {{ '}' }}
+{{ '}' }});</code></pre>
+        </div>
+        <p>Parameters that can be omitted without breaking navigation.</p>
+      </div>
+
+      <div class="type-card">
+        <h4>Matrix Parameters</h4>
+        <div class="code-example">
+          <pre><code>{{ '{' }} path: 'products', component: ProductsComponent {{ '}' }}
+
+// Matrix parameters
+this.router.navigate(['/products'], {{ '{' }}
+  queryParams: {{ '{' }} category: 'electronics', brand: 'apple' {{ '}' }}
+{{ '}' }});</code></pre>
+        </div>
+        <p>Query parameters that don't affect route matching.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="parameter-fetching-section">
+    <h3>Parameter Fetching Methods</h3>
+    <div class="fetching-grid">
+      <div class="fetching-card">
+        <h4>Snapshot Approach</h4>
+        <div class="code-example">
+          <pre><code>ngOnInit() {{ '{' }}
+  // Get parameter once
+  const userId = this.route.snapshot.paramMap.get('id');
+  const category = this.route.snapshot.paramMap.get('category');
+
+  // Use parameters immediately
+  this.loadUser(userId);
+{{ '}' }}</code></pre>
+        </div>
+        <p>Use when parameters don't change during component lifecycle.</p>
+      </div>
+
+      <div class="fetching-card">
+        <h4>Observable Approach</h4>
+        <div class="code-example">
+          <pre><code>ngOnInit() {{ '{' }}
+  // Subscribe to parameter changes
+  this.route.paramMap.subscribe(params => {{ '{' }}
+    const userId = params.get('id');
+    const category = params.get('category');
+
+    // React to parameter changes
+    this.loadUser(userId);
+  {{ '}' }});
+{{ '}' }}</code></pre>
+        </div>
+        <p>Use when parameters can change while component is active.</p>
+      </div>
+
+      <div class="fetching-card">
+        <h4>Multiple Parameters</h4>
+        <div class="code-example">
+          <pre><code>ngOnInit() {{ '{' }}
+  this.route.paramMap.subscribe(params => {{ '{' }}
+    const year = params.get('year');
+    const month = params.get('month');
+    const slug = params.get('slug');
+
+    // Handle multiple parameters
+    this.loadPost(year, month, slug);
+  {{ '}' }});
+{{ '}' }}</code></pre>
+        </div>
+        <p>Handle routes with multiple dynamic parameters.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="parameter-validation-section">
+    <h3>Parameter Validation and Type Safety</h3>
+    <div class="validation-grid">
+      <div class="validation-card">
+        <h4>Type Conversion</h4>
+        <div class="code-example">
+          <pre><code>ngOnInit() {{ '{' }}
+  this.route.paramMap.subscribe(params => {{ '{' }}
+    // Convert string to number
+    const userId = Number(params.get('id'));
+    const page = parseInt(params.get('page') || '1');
+
+    // Validate parameters
+    if (isNaN(userId)) {{ '{' }}
+      this.router.navigate(['/error']);
+      return;
+    {{ '}' }}
+
+    this.loadUser(userId);
+  {{ '}' }});
+{{ '}' }}</code></pre>
+        </div>
+        <p>Convert and validate parameter types for safe usage.</p>
+      </div>
+
+      <div class="validation-card">
+        <h4>Default Values</h4>
+        <div class="code-example">
+          <pre><code>ngOnInit() {{ '{' }}
+  this.route.paramMap.subscribe(params => {{ '{' }}
+    // Provide default values
+    const page = parseInt(params.get('page') || '1');
+    const limit = parseInt(params.get('limit') || '10');
+    const sortBy = params.get('sortBy') || 'name';
+
+    this.loadData(page, limit, sortBy);
+  {{ '}' }});
+{{ '}' }}</code></pre>
+        </div>
+        <p>Handle missing parameters with sensible defaults.</p>
+      </div>
+
+      <div class="validation-card">
+        <h4>Parameter Guards</h4>
+        <div class="code-example">
+          <pre><code>canActivate(route: ActivatedRouteSnapshot): boolean {{ '{' }}
+  const userId = route.paramMap.get('id');
+
+  if (!userId || isNaN(Number(userId))) {{ '{' }}
+    this.router.navigate(['/error']);
+    return false;
+  {{ '}' }}
+
+  return true;
+{{ '}' }}</code></pre>
+        </div>
+        <p>Validate parameters before allowing route activation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="real-world-examples-section">
+    <h3>Real-World Examples</h3>
+    <div class="examples-grid">
+      <div class="example-card">
+        <h4>🛒 E-commerce Product Details</h4>
+        <div class="code-example">
+          <pre><code>// Route: /product/:category/:id
+ngOnInit() {{ '{' }}
+  this.route.paramMap.subscribe(params => {{ '{' }}
+    const category = params.get('category');
+    const productId = Number(params.get('id'));
+
+    if (category && productId) {{ '{' }}
+      this.loadProduct(category, productId);
+    {{ '}' }}
+  {{ '}' }});
+{{ '}' }}</code></pre>
+        </div>
+        <p>Handle product navigation with category and ID parameters.</p>
+      </div>
+
+      <div class="example-card">
+        <h4>👥 User Profile System</h4>
+        <div class="code-example">
+          <pre><code>// Route: /user/:id
+ngOnInit() {{ '{' }}
+  this.route.paramMap.subscribe(params => {{ '{' }}
+    const userId = Number(params.get('id'));
+
+    if (userId && userId > 0) {{ '{' }}
+      this.loadUserProfile(userId);
+    {{ '}' }} else {{ '{' }}
+      this.router.navigate(['/users']);
+    {{ '}' }}
+  {{ '}' }});
+{{ '}' }}</code></pre>
+        </div>
+        <p>Load user profiles with validation and error handling.</p>
+      </div>
+
+      <div class="example-card">
+        <h4>📝 Blog Post System</h4>
+        <div class="code-example">
+          <pre><code>// Route: /post/:year/:month/:slug
+ngOnInit() {{ '{' }}
+  this.route.paramMap.subscribe(params => {{ '{' }}
+    const year = Number(params.get('year'));
+    const month = Number(params.get('month'));
+    const slug = params.get('slug');
+
+    if (year && month && slug) {{ '{' }}
+      this.loadPost(year, month, slug);
+    {{ '}' }}
+  {{ '}' }});
+{{ '}' }}</code></pre>
+        </div>
+        <p>Handle blog posts with date-based URL structure.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices-section">
+    <h3>Best Practices</h3>
+    <div class="practices-list">
+      <div class="practice-item">
+        <h4>✅ Use Observable Approach</h4>
+        <p>Prefer observable subscriptions over snapshot for dynamic parameter changes.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Validate Parameters</h4>
+        <p>Always validate and convert parameters to appropriate types before use.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Handle Missing Parameters</h4>
+        <p>Provide default values and error handling for missing parameters.</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Use Type Safety</h4>
+        <p>Convert string parameters to appropriate types (number, boolean, etc.).</p>
+      </div>
+
+      <div class="practice-item">
+        <h4>✅ Clean Up Subscriptions</h4>
+        <p>Unsubscribe from parameter observables to prevent memory leaks.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="common-patterns-section">
+    <h3>Common Parameter Patterns</h3>
+    <div class="patterns-grid">
+      <div class="pattern-card">
+        <h4>ID-Based Navigation</h4>
+        <div class="code-example">
+          <pre><code>// Route: /item/:id
+this.route.paramMap.subscribe(params => {{ '{' }}
+  const id = Number(params.get('id'));
+  this.loadItem(id);
+{{ '}' }});</code></pre>
+        </div>
+        <p>Most common pattern for entity-based navigation.</p>
+      </div>
+
+      <div class="pattern-card">
+        <h4>Hierarchical Navigation</h4>
+        <div class="code-example">
+          <pre><code>// Route: /category/:categoryId/product/:productId
+this.route.paramMap.subscribe(params => {{ '{' }}
+  const categoryId = params.get('categoryId');
+  const productId = params.get('productId');
+  this.loadProduct(categoryId, productId);
+{{ '}' }});</code></pre>
+        </div>
+        <p>Handle nested resource relationships.</p>
+      </div>
+
+      <div class="pattern-card">
+        <h4>Slug-Based Navigation</h4>
+        <div class="code-example">
+          <pre><code>// Route: /post/:slug
+this.route.paramMap.subscribe(params => {{ '{' }}
+  const slug = params.get('slug');
+  this.loadPostBySlug(slug);
+{{ '}' }});</code></pre>
+        </div>
+        <p>Use human-readable identifiers for SEO-friendly URLs.</p>
+      </div>
+    </div>
+  </div>
+</div>
