@@ -1,0 +1,566 @@
+<div class="reactive-forms-demo">
+  <h1>Reactive Forms in Angular - Complete Demo</h1>
+
+  <!-- 1. Setup a reactive Form -->
+  <section class="form-section">
+    <h2>1. Setup a Reactive Form</h2>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form-container">
+      <div class="form-group">
+        <label for="firstName">First Name *</label>
+        <input
+          id="firstName"
+          type="text"
+          formControlName="firstName"
+          class="form-control"
+          [class.is-invalid]="firstName?.invalid && firstName?.touched"
+        >
+        <div class="error-message" *ngIf="firstName?.invalid && firstName?.touched">
+          {{ getErrorMessage(firstName, 'First Name') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name *</label>
+        <input
+          id="lastName"
+          type="text"
+          formControlName="lastName"
+          class="form-control"
+          [class.is-invalid]="lastName?.invalid && lastName?.touched"
+        >
+        <div class="error-message" *ngIf="lastName?.invalid && lastName?.touched">
+          {{ getErrorMessage(lastName, 'Last Name') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="form-control"
+          [class.is-invalid]="email?.invalid && email?.touched"
+        >
+        <div class="error-message" *ngIf="email?.invalid && email?.touched">
+          {{ getErrorMessage(email, 'Email') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age *</label>
+        <input
+          id="age"
+          type="number"
+          formControlName="age"
+          class="form-control"
+          [class.is-invalid]="age?.invalid && age?.touched"
+        >
+        <div class="error-message" *ngIf="age?.invalid && age?.touched">
+          {{ getErrorMessage(age, 'Age') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password *</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-control"
+          [class.is-invalid]="password?.invalid && password?.touched"
+        >
+        <div class="error-message" *ngIf="password?.invalid && password?.touched">
+          {{ getErrorMessage(password, 'Password') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password *</label>
+        <input
+          id="confirmPassword"
+          type="password"
+          formControlName="confirmPassword"
+          class="form-control"
+          [class.is-invalid]="confirmPassword?.invalid && confirmPassword?.touched"
+        >
+        <div class="error-message" *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
+          {{ getErrorMessage(confirmPassword, 'Confirm Password') }}
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">
+        Submit Form
+      </button>
+    </form>
+
+    <!-- Form Status and Value Display -->
+    <div class="form-status">
+      <h3>Form Status: {{ formStatus }}</h3>
+      <h4>Form Value:</h4>
+      <pre>{{ formValue | json }}</pre>
+    </div>
+
+    <!-- Submitted Data Display -->
+    <div class="submitted-data" *ngIf="isFormSubmitted">
+      <h3>Submitted Data:</h3>
+      <pre>{{ submittedData | json }}</pre>
+    </div>
+  </section>
+
+  <!-- 2. Creating form programmatically -->
+  <section class="form-section">
+    <h2>2. Creating Form Programmatically</h2>
+    <form [formGroup]="programmaticForm" (ngSubmit)="onSubmitProgrammatic()" class="form-container">
+      <div class="form-group">
+        <label for="progName">Name *</label>
+        <input
+          id="progName"
+          type="text"
+          formControlName="name"
+          class="form-control"
+          [class.is-invalid]="programmaticForm.get('name')?.invalid && programmaticForm.get('name')?.touched"
+        >
+        <div class="error-message" *ngIf="programmaticForm.get('name')?.invalid && programmaticForm.get('name')?.touched">
+          {{ getErrorMessage(programmaticForm.get('name'), 'Name') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="progEmail">Email *</label>
+        <input
+          id="progEmail"
+          type="email"
+          formControlName="email"
+          class="form-control"
+          [class.is-invalid]="programmaticForm.get('email')?.invalid && programmaticForm.get('email')?.touched"
+        >
+        <div class="error-message" *ngIf="programmaticForm.get('email')?.invalid && programmaticForm.get('email')?.touched">
+          {{ getErrorMessage(programmaticForm.get('email'), 'Email') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="progPhone">Phone (10 digits)</label>
+        <input
+          id="progPhone"
+          type="tel"
+          formControlName="phone"
+          class="form-control"
+          [class.is-invalid]="programmaticForm.get('phone')?.invalid && programmaticForm.get('phone')?.touched"
+        >
+        <div class="error-message" *ngIf="programmaticForm.get('phone')?.invalid && programmaticForm.get('phone')?.touched">
+          {{ getErrorMessage(programmaticForm.get('phone'), 'Phone') }}
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="programmaticForm.invalid" class="btn btn-primary">
+        Submit Programmatic Form
+      </button>
+    </form>
+  </section>
+
+  <!-- 5. Getting Access to controls and Grouping Controls -->
+  <section class="form-section">
+    <h2>5. Form Grouping Controls</h2>
+    <form [formGroup]="groupedForm" (ngSubmit)="onSubmitGrouped()" class="form-container">
+      <!-- Personal Info Group -->
+      <div formGroupName="personalInfo" class="form-group-container">
+        <h3>Personal Information</h3>
+        <div class="form-group">
+          <label for="groupFirstName">First Name *</label>
+          <input
+            id="groupFirstName"
+            type="text"
+            formControlName="firstName"
+            class="form-control"
+            [class.is-invalid]="groupedForm.get('personalInfo.firstName')?.invalid && groupedForm.get('personalInfo.firstName')?.touched"
+          >
+          <div class="error-message" *ngIf="groupedForm.get('personalInfo.firstName')?.invalid && groupedForm.get('personalInfo.firstName')?.touched">
+            {{ getErrorMessage(groupedForm.get('personalInfo.firstName'), 'First Name') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="groupLastName">Last Name *</label>
+          <input
+            id="groupLastName"
+            type="text"
+            formControlName="lastName"
+            class="form-control"
+            [class.is-invalid]="groupedForm.get('personalInfo.lastName')?.invalid && groupedForm.get('personalInfo.lastName')?.touched"
+          >
+          <div class="error-message" *ngIf="groupedForm.get('personalInfo.lastName')?.invalid && groupedForm.get('personalInfo.lastName')?.touched">
+            {{ getErrorMessage(groupedForm.get('personalInfo.lastName'), 'Last Name') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="groupEmail">Email *</label>
+          <input
+            id="groupEmail"
+            type="email"
+            formControlName="email"
+            class="form-control"
+            [class.is-invalid]="groupedForm.get('personalInfo.email')?.invalid && groupedForm.get('personalInfo.email')?.touched"
+          >
+          <div class="error-message" *ngIf="groupedForm.get('personalInfo.email')?.invalid && groupedForm.get('personalInfo.email')?.touched">
+            {{ getErrorMessage(groupedForm.get('personalInfo.email'), 'Email') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Address Info Group -->
+      <div formGroupName="addressInfo" class="form-group-container">
+        <h3>Address Information</h3>
+        <div class="form-group">
+          <label for="street">Street *</label>
+          <input
+            id="street"
+            type="text"
+            formControlName="street"
+            class="form-control"
+            [class.is-invalid]="groupedForm.get('addressInfo.street')?.invalid && groupedForm.get('addressInfo.street')?.touched"
+          >
+          <div class="error-message" *ngIf="groupedForm.get('addressInfo.street')?.invalid && groupedForm.get('addressInfo.street')?.touched">
+            {{ getErrorMessage(groupedForm.get('addressInfo.street'), 'Street') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="city">City *</label>
+          <input
+            id="city"
+            type="text"
+            formControlName="city"
+            class="form-control"
+            [class.is-invalid]="groupedForm.get('addressInfo.city')?.invalid && groupedForm.get('addressInfo.city')?.touched"
+          >
+          <div class="error-message" *ngIf="groupedForm.get('addressInfo.city')?.invalid && groupedForm.get('addressInfo.city')?.touched">
+            {{ getErrorMessage(groupedForm.get('addressInfo.city'), 'City') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="zipCode">Zip Code *</label>
+          <input
+            id="zipCode"
+            type="text"
+            formControlName="zipCode"
+            class="form-control"
+            [class.is-invalid]="groupedForm.get('addressInfo.zipCode')?.invalid && groupedForm.get('addressInfo.zipCode')?.touched"
+          >
+          <div class="error-message" *ngIf="groupedForm.get('addressInfo.zipCode')?.invalid && groupedForm.get('addressInfo.zipCode')?.touched">
+            {{ getErrorMessage(groupedForm.get('addressInfo.zipCode'), 'Zip Code') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Preferences Group -->
+      <div formGroupName="preferences" class="form-group-container">
+        <h3>Preferences</h3>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" formControlName="newsletter">
+            Subscribe to Newsletter
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" formControlName="notifications">
+            Enable Notifications
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="theme">Theme</label>
+          <select id="theme" formControlName="theme" class="form-control">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="auto">Auto</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="groupedForm.invalid" class="btn btn-primary">
+        Submit Grouped Form
+      </button>
+    </form>
+  </section>
+
+  <!-- 6. Array of Form Controls -->
+  <section class="form-section">
+    <h2>6. Form Array - Skills Management</h2>
+    <form [formGroup]="skillsForm" (ngSubmit)="onSubmitSkills()" class="form-container">
+      <div class="form-group">
+        <label for="skillsName">Name *</label>
+        <input
+          id="skillsName"
+          type="text"
+          formControlName="name"
+          class="form-control"
+          [class.is-invalid]="skillsForm.get('name')?.invalid && skillsForm.get('name')?.touched"
+        >
+        <div class="error-message" *ngIf="skillsForm.get('name')?.invalid && skillsForm.get('name')?.touched">
+          {{ getErrorMessage(skillsForm.get('name'), 'Name') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Skills *</label>
+        <div formArrayName="skills" class="skills-container">
+          <div *ngFor="let skill of skillsArray.controls; let i = index" class="skill-item">
+            <input
+              [formControlName]="i"
+              class="form-control"
+              [class.is-invalid]="skill.invalid && skill.touched"
+              placeholder="Enter skill"
+            >
+            <button type="button" (click)="removeSkill(i)" class="btn btn-danger btn-sm">
+              Remove
+            </button>
+            <div class="error-message" *ngIf="skill.invalid && skill.touched">
+              Skill is required
+            </div>
+          </div>
+        </div>
+        <button type="button" (click)="addSkill()" class="btn btn-secondary">
+          Add Skill
+        </button>
+      </div>
+
+      <button type="submit" [disabled]="skillsForm.invalid" class="btn btn-primary">
+        Submit Skills Form
+      </button>
+    </form>
+  </section>
+
+  <!-- 7. Creating Custom Validators -->
+  <section class="form-section">
+    <h2>7. Custom Validators</h2>
+    <form [formGroup]="customValidatorForm" (ngSubmit)="onSubmitCustomValidator()" class="form-container">
+      <div class="form-group">
+        <label for="username">Username *</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          class="form-control"
+          [class.is-invalid]="customValidatorForm.get('username')?.invalid && customValidatorForm.get('username')?.touched"
+        >
+        <div class="error-message" *ngIf="customValidatorForm.get('username')?.invalid && customValidatorForm.get('username')?.touched">
+          {{ getErrorMessage(customValidatorForm.get('username'), 'Username') }}
+        </div>
+        <small class="form-text">Username must be at least 3 characters and contain only letters, numbers, and underscores</small>
+      </div>
+
+      <div class="form-group">
+        <label for="customPassword">Password *</label>
+        <input
+          id="customPassword"
+          type="password"
+          formControlName="password"
+          class="form-control"
+          [class.is-invalid]="customValidatorForm.get('password')?.invalid && customValidatorForm.get('password')?.touched"
+        >
+        <div class="error-message" *ngIf="customValidatorForm.get('password')?.invalid && customValidatorForm.get('password')?.touched">
+          {{ getErrorMessage(customValidatorForm.get('password'), 'Password') }}
+        </div>
+        <small class="form-text">Password must contain uppercase, lowercase, numbers, and special characters</small>
+      </div>
+
+      <div class="form-group">
+        <label for="website">Website *</label>
+        <input
+          id="website"
+          type="url"
+          formControlName="website"
+          class="form-control"
+          [class.is-invalid]="customValidatorForm.get('website')?.invalid && customValidatorForm.get('website')?.touched"
+        >
+        <div class="error-message" *ngIf="customValidatorForm.get('website')?.invalid && customValidatorForm.get('website')?.touched">
+          {{ getErrorMessage(customValidatorForm.get('website'), 'Website') }}
+        </div>
+        <small class="form-text">Must be a valid URL starting with http:// or https://</small>
+      </div>
+
+      <button type="submit" [disabled]="customValidatorForm.invalid" class="btn btn-primary">
+        Submit Custom Validator Form
+      </button>
+    </form>
+  </section>
+
+  <!-- 9. Creating Custom Async Validator -->
+  <section class="form-section">
+    <h2>9. Async Validators</h2>
+    <form [formGroup]="asyncValidatorForm" (ngSubmit)="onSubmitAsyncValidator()" class="form-container">
+      <div class="form-group">
+        <label for="asyncEmail">Email *</label>
+        <input
+          id="asyncEmail"
+          type="email"
+          formControlName="email"
+          class="form-control"
+          [class.is-invalid]="asyncValidatorForm.get('email')?.invalid && asyncValidatorForm.get('email')?.touched"
+        >
+        <div class="error-message" *ngIf="asyncValidatorForm.get('email')?.invalid && asyncValidatorForm.get('email')?.touched">
+          {{ getErrorMessage(asyncValidatorForm.get('email'), 'Email') }}
+        </div>
+        <div class="error-message" *ngIf="asyncValidatorForm.get('email')?.errors?.['emailTaken']">
+          This email is already taken
+        </div>
+        <small class="form-text">Try entering an email with 'admin' or 'test' to see async validation</small>
+      </div>
+
+      <div class="form-group">
+        <label for="asyncUsername">Username *</label>
+        <input
+          id="asyncUsername"
+          type="text"
+          formControlName="username"
+          class="form-control"
+          [class.is-invalid]="asyncValidatorForm.get('username')?.invalid && asyncValidatorForm.get('username')?.touched"
+        >
+        <div class="error-message" *ngIf="asyncValidatorForm.get('username')?.invalid && asyncValidatorForm.get('username')?.touched">
+          {{ getErrorMessage(asyncValidatorForm.get('username'), 'Username') }}
+        </div>
+        <div class="error-message" *ngIf="asyncValidatorForm.get('username')?.errors?.['usernameTaken']">
+          This username is already taken
+        </div>
+        <small class="form-text">Try entering 'admin', 'user', or 'test' to see async validation</small>
+      </div>
+
+      <button type="submit" [disabled]="asyncValidatorForm.invalid" class="btn btn-primary">
+        Submit Async Validator Form
+      </button>
+    </form>
+  </section>
+
+  <!-- 11. Set and Patch value -->
+  <section class="form-section">
+    <h2>11. Set and Patch Value</h2>
+    <form [formGroup]="setPatchForm" class="form-container">
+      <div class="form-group">
+        <label for="setFirstName">First Name</label>
+        <input id="setFirstName" type="text" formControlName="firstName" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="setLastName">Last Name</label>
+        <input id="setLastName" type="text" formControlName="lastName" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="setEmail">Email</label>
+        <input id="setEmail" type="email" formControlName="email" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="setAge">Age</label>
+        <input id="setAge" type="number" formControlName="age" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="setBio">Bio</label>
+        <textarea id="setBio" formControlName="bio" class="form-control"></textarea>
+      </div>
+
+      <div class="button-group">
+        <button type="button" (click)="setFormValues()" class="btn btn-success">
+          Set All Values
+        </button>
+        <button type="button" (click)="patchFormValues()" class="btn btn-warning">
+          Patch Some Values
+        </button>
+        <button type="button" (click)="resetForm()" class="btn btn-danger">
+          Reset Form
+        </button>
+      </div>
+
+      <div class="form-value-display">
+        <h4>Current Form Value:</h4>
+        <pre>{{ setPatchForm.value | json }}</pre>
+      </div>
+    </form>
+  </section>
+
+  <!-- 12. Template Driven VS reactive Approach -->
+  <section class="form-section">
+    <h2>12. Template Driven vs Reactive Approach</h2>
+    <div class="comparison-container">
+      <div class="comparison-section">
+        <h3>Reactive Approach (Current)</h3>
+        <form [formGroup]="comparisonForm" (ngSubmit)="onSubmitComparison()" class="form-container">
+          <div class="form-group">
+            <label for="compName">Name *</label>
+            <input
+              id="compName"
+              type="text"
+              formControlName="name"
+              class="form-control"
+              [class.is-invalid]="comparisonForm.get('name')?.invalid && comparisonForm.get('name')?.touched"
+            >
+            <div class="error-message" *ngIf="comparisonForm.get('name')?.invalid && comparisonForm.get('name')?.touched">
+              {{ getErrorMessage(comparisonForm.get('name'), 'Name') }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="compEmail">Email *</label>
+            <input
+              id="compEmail"
+              type="email"
+              formControlName="email"
+              class="form-control"
+              [class.is-invalid]="comparisonForm.get('email')?.invalid && comparisonForm.get('email')?.touched"
+            >
+            <div class="error-message" *ngIf="comparisonForm.get('email')?.invalid && comparisonForm.get('email')?.touched">
+              {{ getErrorMessage(comparisonForm.get('email'), 'Email') }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="compMessage">Message *</label>
+            <textarea
+              id="compMessage"
+              formControlName="message"
+              class="form-control"
+              [class.is-invalid]="comparisonForm.get('message')?.invalid && comparisonForm.get('message')?.touched"
+            ></textarea>
+            <div class="error-message" *ngIf="comparisonForm.get('message')?.invalid && comparisonForm.get('message')?.touched">
+              {{ getErrorMessage(comparisonForm.get('message'), 'Message') }}
+            </div>
+          </div>
+
+          <button type="submit" [disabled]="comparisonForm.invalid" class="btn btn-primary">
+            Submit Reactive Form
+          </button>
+        </form>
+      </div>
+
+      <div class="comparison-section">
+        <h3>Template Driven Approach (Reference)</h3>
+        <div class="template-driven-example">
+          <p><strong>Template Driven Form Example:</strong></p>
+          <pre><code>
+&lt;form #contactForm="ngForm" (ngSubmit)="onSubmit()"&gt;
+  &lt;input name="name" [(ngModel)]="contact.name" required&gt;
+  &lt;input name="email" [(ngModel)]="contact.email" required email&gt;
+  &lt;textarea name="message" [(ngModel)]="contact.message" required&gt;&lt;/textarea&gt;
+  &lt;button type="submit" [disabled]="!contactForm.valid"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+          </code></pre>
+
+          <h4>Key Differences:</h4>
+          <ul>
+            <li><strong>Reactive:</strong> Form logic in component, better for complex forms</li>
+            <li><strong>Template Driven:</strong> Form logic in template, simpler for basic forms</li>
+            <li><strong>Reactive:</strong> Better unit testing, type safety</li>
+            <li><strong>Template Driven:</strong> Less code, easier to understand</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

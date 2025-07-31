@@ -30,6 +30,7 @@ import { TemplateDrivenFormsComponent } from './forms-demo/template-driven-forms
 import { FormValidationDemoComponent } from './forms-demo/form-validation-demo/form-validation-demo.component';
 import { FormGroupingDemoComponent } from './forms-demo/form-grouping-demo/form-grouping-demo.component';
 import { FormControlsDemoComponent } from './forms-demo/form-controls-demo/form-controls-demo.component';
+import { ReactiveFormsDemoComponent } from './forms-demo/reactive-forms-demo/reactive-forms-demo.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/html-ts-communication', pathMatch: 'full' },
@@ -50,6 +51,7 @@ export const routes: Routes = [
   { path: 'form-validation-demo', component: FormValidationDemoComponent },
   { path: 'form-grouping-demo', component: FormGroupingDemoComponent },
   { path: 'form-controls-demo', component: FormControlsDemoComponent },
+  { path: 'reactive-forms-demo', component: ReactiveFormsDemoComponent },
   {
     path: 'routing-demo',
     component: RoutingDemoComponent,

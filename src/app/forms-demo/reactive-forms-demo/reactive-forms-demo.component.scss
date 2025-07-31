@@ -1,0 +1,445 @@
+.reactive-forms-demo {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: 300;
+  }
+
+  .form-section {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    padding: 25px;
+    border: 1px solid #e1e8ed;
+
+    h2 {
+      color: #34495e;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      font-weight: 500;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+    }
+
+    h3 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+  }
+
+  .form-container {
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #2c3e50;
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e1e8ed;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background-color: #ffffff;
+
+      &:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      }
+
+      &.is-invalid {
+        border-color: #e74c3c;
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+      }
+
+      &::placeholder {
+        color: #bdc3c7;
+      }
+    }
+
+    textarea.form-control {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    select.form-control {
+      cursor: pointer;
+    }
+  }
+
+  .error-message {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    font-weight: 500;
+  }
+
+  .form-text {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+    margin-top: 5px;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &.btn-primary {
+      background-color: #3498db;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: #2980b9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+      }
+    }
+
+    &.btn-secondary {
+      background-color: #95a5a6;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: #7f8c8d;
+        transform: translateY(-1px);
+      }
+    }
+
+    &.btn-success {
+      background-color: #27ae60;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: #229954;
+        transform: translateY(-1px);
+      }
+    }
+
+    &.btn-warning {
+      background-color: #f39c12;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: #e67e22;
+        transform: translateY(-1px);
+      }
+    }
+
+    &.btn-danger {
+      background-color: #e74c3c;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: #c0392b;
+        transform: translateY(-1px);
+      }
+
+      &.btn-sm {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+
+    .btn {
+      flex: 1;
+      min-width: 120px;
+    }
+  }
+
+  // Form Status and Value Display
+  .form-status {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 20px;
+    border-left: 4px solid #3498db;
+
+    h3 {
+      margin: 0 0 10px 0;
+      color: #2c3e50;
+      font-size: 1.1rem;
+    }
+
+    h4 {
+      margin: 15px 0 10px 0;
+      color: #34495e;
+      font-size: 1rem;
+    }
+
+    pre {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      margin: 0;
+    }
+  }
+
+  .submitted-data {
+    background: #d5f4e6;
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 20px;
+    border-left: 4px solid #27ae60;
+
+    h3 {
+      margin: 0 0 10px 0;
+      color: #27ae60;
+      font-size: 1.1rem;
+    }
+
+    pre {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      margin: 0;
+    }
+  }
+
+  // Form Grouping
+  .form-group-container {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e1e8ed;
+
+    h3 {
+      margin-top: 0;
+      color: #2c3e50;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+  }
+
+  // Skills Form Array
+  .skills-container {
+    margin-bottom: 15px;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    .form-control {
+      flex: 1;
+    }
+
+    .btn-sm {
+      padding: 8px 12px;
+      font-size: 0.8rem;
+    }
+  }
+
+  // Set and Patch Value
+  .form-value-display {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 20px;
+    border-left: 4px solid #9b59b6;
+
+    h4 {
+      margin: 0 0 10px 0;
+      color: #9b59b6;
+      font-size: 1rem;
+    }
+
+    pre {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      margin: 0;
+    }
+  }
+
+  // Template Driven vs Reactive Comparison
+  .comparison-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .comparison-section {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 20px;
+    border: 1px solid #e1e8ed;
+
+    h3 {
+      margin-top: 0;
+      color: #2c3e50;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+  }
+
+  .template-driven-example {
+    p {
+      margin-bottom: 15px;
+      font-weight: 500;
+      color: #2c3e50;
+    }
+
+    pre {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      margin: 15px 0;
+
+      code {
+        color: inherit;
+      }
+    }
+
+    h4 {
+      color: #34495e;
+      margin: 20px 0 10px 0;
+      font-size: 1rem;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+
+      li {
+        margin-bottom: 8px;
+        color: #2c3e50;
+        line-height: 1.4;
+
+        strong {
+          color: #3498db;
+        }
+      }
+    }
+  }
+
+  // Checkbox and Radio styling
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-right: 8px;
+    transform: scale(1.1);
+  }
+
+  // Responsive Design
+  @media (max-width: 768px) {
+    padding: 15px;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .form-section {
+      padding: 20px;
+    }
+
+    .button-group {
+      flex-direction: column;
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    .skill-item {
+      flex-direction: column;
+      align-items: stretch;
+
+      .btn-sm {
+        align-self: flex-end;
+        width: fit-content;
+      }
+    }
+  }
+
+  // Animation for form sections
+  .form-section {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // Focus states for better accessibility
+  .form-control:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  }
+
+  // Loading states for async validation
+  .form-control.pending {
+    border-color: #f39c12;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8' stroke='%23f39c12' stroke-width='2' fill='none' stroke-dasharray='25.13' stroke-dashoffset='25.13'%3E%3Canimate attributeName='stroke-dashoffset' values='25.13;0;25.13' dur='1s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    padding-right: 40px;
+  }
+}
