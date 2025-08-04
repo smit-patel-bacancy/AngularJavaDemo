@@ -1,0 +1,34 @@
+<div class="child-component">
+  <h3>👶 Child Component</h3>
+
+  <div class="child-section">
+    <h4>📥 Data from Parent:</h4>
+    <div class="data-display">
+      <p><strong>Message from Parent:</strong> {{ messageFromParent }}</p>
+      <p><strong>Count from Parent:</strong> {{ countFromParent }}</p>
+    </div>
+  </div>
+
+  <div class="child-section">
+    <h4>📤 Send Data to Parent:</h4>
+    <div class="button-group">
+      <button (click)="sendMessageToParent()" class="btn btn-primary">
+        Send Message to Parent
+      </button>
+      <button (click)="sendCountToParent()" class="btn btn-secondary">
+        Send Count to Parent
+      </button>
+    </div>
+  </div>
+
+  <div class="child-section">
+    <h4>🔧 Child's Own Data:</h4>
+    <div class="data-display">
+      <p><strong>Child Name:</strong> {{ childName }}</p>
+      <p><strong>Child Count:</strong> {{ childCount }}</p>
+      <button (click)="updateChildName()" class="btn btn-info">
+        Update Child Name
+      </button>
+    </div>
+  </div>
+</div>

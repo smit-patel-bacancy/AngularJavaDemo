@@ -1,0 +1,109 @@
+<div class="simple-parent-child-demo">
+  <h2>🔄 Simple Parent-Child Communication Demo</h2>
+
+  <div class="demo-intro">
+    <p>This demo shows the basic concepts of parent-child communication in Angular:</p>
+    <ul>
+      <li><strong>📥 Parent → Child:</strong> Using &#64;Input() properties</li>
+      <li><strong>📤 Child → Parent:</strong> Using &#64;Output() events</li>
+    </ul>
+  </div>
+
+  <div class="parent-section">
+    <h3>👨‍💼 Parent Component</h3>
+
+    <div class="parent-controls">
+      <h4>📥 Send Data to Child:</h4>
+      <div class="control-group">
+        <div class="data-item">
+          <label><strong>Parent Message:</strong></label>
+          <p>{{ parentMessage }}</p>
+          <button (click)="updateParentMessage()" class="btn btn-primary">
+            Update Message
+          </button>
+        </div>
+
+        <div class="data-item">
+          <label><strong>Parent Count:</strong></label>
+          <p>{{ parentCount }}</p>
+          <button (click)="incrementParentCount()" class="btn btn-secondary">
+            Increment Count
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="parent-display">
+      <h4>📤 Data from Child:</h4>
+
+      <div class="child-data-section">
+        <div class="data-section">
+          <h5>Messages from Child:</h5>
+          <div class="message-list">
+            <div *ngFor="let message of messagesFromChild" class="message-item">
+              {{ message }}
+            </div>
+            <div *ngIf="messagesFromChild.length === 0" class="no-data">
+              No messages from child yet...
+            </div>
+          </div>
+          <button (click)="clearMessages()" class="btn btn-clear">Clear Messages</button>
+        </div>
+
+        <div class="data-section">
+          <h5>Counts from Child:</h5>
+          <div class="count-list">
+            <div *ngFor="let count of countsFromChild" class="count-item">
+              {{ count }}
+            </div>
+            <div *ngIf="countsFromChild.length === 0" class="no-data">
+              No counts from child yet...
+            </div>
+          </div>
+          <button (click)="clearCounts()" class="btn btn-clear">Clear Counts</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="child-section">
+    <app-simple-child
+      [messageFromParent]="parentMessage"
+      [countFromParent]="parentCount"
+      (messageToParent)="onMessageFromChild($event)"
+      (countToParent)="onCountFromChild($event)">
+    </app-simple-child>
+  </div>
+
+  <div class="code-examples">
+    <h3>💡 Code Examples</h3>
+
+    <div class="example-grid">
+      <div class="example">
+        <h4>📥 Parent → Child (&#64;Input)</h4>
+        <pre><code>// In Child Component
+&#64;Input() messageFromParent: string = '';
+&#64;Input() countFromParent: number = 0;
+
+// In Parent Template
+&lt;app-child
+  [messageFromParent]="parentMessage"
+  [countFromParent]="parentCount"&gt;
+&lt;/app-child&gt;</code></pre>
+      </div>
+
+      <div class="example">
+        <h4>📤 Child → Parent (&#64;Output)</h4>
+        <pre><code>// In Child Component
+&#64;Output() messageToParent = new EventEmitter&lt;string&gt;();
+&#64;Output() countToParent = new EventEmitter&lt;number&gt;();
+
+// In Parent Template
+&lt;app-child
+  (messageToParent)="onMessageFromChild($event)"
+  (countToParent)="onCountFromChild($event)"&gt;
+&lt;/app-child&gt;</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
