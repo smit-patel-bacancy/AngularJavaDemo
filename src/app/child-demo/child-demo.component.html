@@ -1,5 +1,16 @@
-<div style="border:1px solid #ccc; padding:10px; margin:10px;">
-  <h3>Child Component</h3>
-  <p>Message from Parent: {{ childMessage }}</p>
-  <button (click)="sendMessage()">Send Message to Parent</button>
+<div class="child-container">
+  <h3 class="child-title">Edit User (Child)</h3>
+  @if (user) {
+    <form (ngSubmit)="updateUser()">
+      <label>
+        Name:
+        <input [(ngModel)]="user.name" name="name" />
+      </label>
+      <label>
+        Email:
+        <input [(ngModel)]="user.email" name="email" />
+      </label>
+      <button type="submit">Update User</button>
+    </form>
+  }
 </div>
